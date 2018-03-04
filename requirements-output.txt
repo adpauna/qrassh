@@ -1,0 +1,32 @@
+# csirtg
+csirtgsdk>=0.0.0a17 # Specify version because pip won't install pre-release versions by default
+
+# dshield
+requests
+
+# elasticsearch
+pyes
+
+# mysql
+# If this fails, see documentation /home/irassh/irassh/doc/sql/README.md
+#
+# There are two options, mysqlclient is newer and provides Python3 support.
+# MySQL-python is the classic option with irassh and has been tested.
+mysqlclient
+# MySQL-python
+
+# mongodb
+pymongo
+
+# rethinkdblog
+rethinkdb
+
+# s3
+botocore
+
+# slack
+slackclient
+
+# splunklegacy
+# For more info, see documentation /home/irassh/irassh/doc/splunk/README.md
+splunk-sdk
