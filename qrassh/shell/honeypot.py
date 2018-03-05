@@ -391,7 +391,7 @@ class HoneyPotShell(object):
                     lastpp = pp
 
                 if self.ttylogEnabled:
-                    ttyAction = '\033[1;' + actionColor + 'm' + actionName.upper() + '\033[1;m\n'
+                    ttyAction = '\033[1;' + actionColor + 'm' + actionName.upper() + '\033[1;m #q_learner \n'
                     ttylog.ttylog_write(self.protocol.terminal.ttylogFile, len(ttyAction), ttylog.TYPE_OUTPUT, time.time(), ttyAction)
             else:
                 log.msg(eventid='qrassh.command.failed', input=' '.join(cmd2), format='Command not found: %(input)s')
