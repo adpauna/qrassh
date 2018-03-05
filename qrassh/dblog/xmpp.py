@@ -53,7 +53,7 @@ class XMPPLoggerProtocol(muc.MUCClient):
 from twisted.application import service
 from twisted.words.protocols.jabber import jid
 from wokkel.client import XMPPClient
-from irassh.core import dblog
+from qrassh.core import dblog
 from twisted.words.xish import domish
 
 class DBLogger(dblog.DBLogger):

@@ -40,23 +40,23 @@ import socket
 import time
 
 # Events:
-#  irassh.client.fingerprint
-#  irassh.client.size
-#  irassh.client.var
-#  irassh.client.version
-#  irassh.command.input
-#  irassh.command.failed
-#  irassh.command.success
-#  irassh.direct-tcpip.data
-#  irassh.direct-tcpip.request
-#  irassh.log.closed
-#  irassh.log.open
-#  irassh.login.failed
-#  irassh.login.success
-#  irassh.session.closed
-#  irassh.session.connect
-#  irassh.session.file_download
-#  irassh.session.file_upload
+#  qrassh.client.fingerprint
+#  qrassh.client.size
+#  qrassh.client.var
+#  qrassh.client.version
+#  qrassh.command.input
+#  qrassh.command.failed
+#  qrassh.command.success
+#  qrassh.direct-tcpip.data
+#  qrassh.direct-tcpip.request
+#  qrassh.log.closed
+#  qrassh.log.open
+#  qrassh.login.failed
+#  qrassh.login.success
+#  qrassh.session.closed
+#  qrassh.session.connect
+#  qrassh.session.file_download
+#  qrassh.session.file_upload
 
 """
 The time is available in two formats in each event, as key 'time'
@@ -82,7 +82,7 @@ def convert(input):
 class Output(object):
     """
     This is the abstract base class intended to be inherited by
-    irassh output plugins. Plugins require the mandatory
+    qrassh output plugins. Plugins require the mandatory
     methods: stop, start and write
     """
 
@@ -167,7 +167,7 @@ class Output(object):
                 pass
 
         # On disconnect add the tty log
-        #if ev['eventid'] == 'irassh.log.closed':
+        #if ev['eventid'] == 'qrassh.log.closed':
             # FIXME: file is read for each output plugin
             #f = file(ev['ttylog'])
             #ev['ttylog'] = f.read(10485760)
@@ -195,7 +195,7 @@ class Output(object):
             ev['src_ip'] = self.ips[sessionno]
 
         # Connection event is special. adds to session list
-        if ev['eventid'] == 'irassh.session.connect':
+        if ev['eventid'] == 'qrassh.session.connect':
             self.sessions[sessionno] = ev['session']
             self.ips[sessionno] = ev['src_ip']
         else:
@@ -204,6 +204,6 @@ class Output(object):
         self.write(ev)
 
         # Disconnect is special, remove cached data
-        if ev['eventid'] == 'irassh.session.closed':
+        if ev['eventid'] == 'qrassh.session.closed':
             del self.sessions[sessionno]
             del self.ips[sessionno]

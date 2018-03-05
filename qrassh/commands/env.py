@@ -3,7 +3,7 @@ from __future__ import division, absolute_import
 
 from twisted.internet import reactor
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 

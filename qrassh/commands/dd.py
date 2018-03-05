@@ -9,8 +9,8 @@ from __future__ import division, absolute_import
 
 from os import path
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 commands = {}
 
@@ -90,7 +90,7 @@ class command_dd(HoneyPotCommand):
 
 
     def lineReceived(self, line):
-        log.msg(eventid='irassh.session.input',
+        log.msg(eventid='qrassh.session.input',
                 realm='dd',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')

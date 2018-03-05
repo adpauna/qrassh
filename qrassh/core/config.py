@@ -20,5 +20,5 @@ def readConfigFile(cfgfile):
     parser.read(cfgfile)
     return parser
 
-CONFIG = readConfigFile(("irassh.cfg.dist", "etc/irassh.cfg", "irassh.cfg"))
+CONFIG = readConfigFile(("qrassh.cfg.dist", "etc/qrassh.cfg", "qrassh.cfg"))
 

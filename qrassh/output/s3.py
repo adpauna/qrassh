@@ -11,10 +11,10 @@ from twisted.internet import defer, threads
 from botocore.session import get_session
 from botocore.exceptions import ClientError
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
 
     def __init__(self, cfg):
         self.seen = set()
@@ -31,7 +31,7 @@ class Output(irassh.core.output.Output):
             verify=False if cfg.get("output_s3", "verify") == "no" else True,
         )
         self.bucket = cfg.get("output_s3", "bucket")
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
     def start(self):
         pass
@@ -40,10 +40,10 @@ class Output(irassh.core.output.Output):
         pass
 
     def write(self, entry):
-        if entry["eventid"] == "irassh.session.file_download":
+        if entry["eventid"] == "qrassh.session.file_download":
             self.upload(entry['shasum'], entry["outfile"])
 
-        elif entry["eventid"] == "irassh.session.file_upload":
+        elif entry["eventid"] == "qrassh.session.file_upload":
             self.upload(entry['shasum'], entry['outfile'])
 
     @defer.inlineCallbacks

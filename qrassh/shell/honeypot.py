@@ -17,17 +17,17 @@ import time
 from twisted.internet import error
 from twisted.python import log, failure
 
-from irassh.actions import proxy
-from irassh.core import ttylog
-from irassh.core.config import CONFIG
-from irassh.rl import rl_state
-from irassh.shell import fs
+from qrassh.actions import proxy
+from qrassh.core import ttylog
+from qrassh.core.config import CONFIG
+from qrassh.rl import rl_state
+from qrassh.shell import fs
 
 # From Python3.6 we get the new shlex version
 if sys.version_info.major >= 3 and sys.version_info.minor >= 6:
     import shlex
 else:
-    from irassh.shell import shlex
+    from qrassh.shell import shlex
 
 
 
@@ -210,7 +210,7 @@ class HoneyPotShell(object):
     def lineReceived(self, line):
         """
         """
-        log.msg(eventid='irassh.command.input', input=line, format='CMD: %(input)s')
+        log.msg(eventid='qrassh.command.input', input=line, format='CMD: %(input)s')
         #line = b"".join(line)
         line = line.decode("utf-8")
         self.lexer = shlex.shlex(instream=line, punctuation_chars=True)
@@ -382,7 +382,7 @@ class HoneyPotShell(object):
                 actionName = validator.getActionName()
                 actionColor = validator.getActionColor()
 
-                log.msg(eventid='irassh.command.action.success', action=actionName, input=cmd['command'] + " " + ' '.join(cmd['rargs']), format='Command found: %(input)s')
+                log.msg(eventid='qrassh.command.action.success', action=actionName, input=cmd['command'] + " " + ' '.join(cmd['rargs']), format='Command found: %(input)s')
                 if index == len(cmd_array)-1:
                     lastpp =  StdOutStdErrEmulationProtocol(self.protocol, cmdclass, cmd['rargs'], None, None)
                     pp = lastpp
@@ -394,7 +394,7 @@ class HoneyPotShell(object):
                     ttyAction = '\033[1;' + actionColor + 'm' + actionName.upper() + '\033[1;m\n'
                     ttylog.ttylog_write(self.protocol.terminal.ttylogFile, len(ttyAction), ttylog.TYPE_OUTPUT, time.time(), ttyAction)
             else:
-                log.msg(eventid='irassh.command.failed', input=' '.join(cmd2), format='Command not found: %(input)s')
+                log.msg(eventid='qrassh.command.failed', input=' '.join(cmd2), format='Command not found: %(input)s')
                 self.protocol.terminal.write('bash: {}: command not found\n'.format(cmd['command']))
                 runOrPrompt()
 

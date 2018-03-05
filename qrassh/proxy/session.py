@@ -13,9 +13,9 @@ from twisted.conch.ssh import common, keys, session
 from twisted.conch.client.knownhosts import KnownHostsFile
 #from twisted.conch import endpoints
 
-from irassh.core.config import CONFIG
-from irassh.proxy import endpoints
-from irassh.ssh import channel
+from qrassh.core.config import CONFIG
+from qrassh.proxy import endpoints
+from qrassh.ssh import channel
 
 class _ProtocolFactory():
     """
@@ -208,7 +208,7 @@ class ProxySSHSession(channel.CowrieSSHChannel):
         value, rest = getNS(rest)
         if rest:
             raise ValueError("Bad data given in env request")
-        log.msg(eventid='irassh.client.var', format='request_env: %(name)s=%(value)s',
+        log.msg(eventid='qrassh.client.var', format='request_env: %(name)s=%(value)s',
             name=name, value=value)
         # FIXME: This only works for shell, not for exec command
         if self.session:

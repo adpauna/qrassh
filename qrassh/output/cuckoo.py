@@ -42,10 +42,10 @@ except ImportError:
 import requests
 from requests.auth import HTTPBasicAuth
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -54,7 +54,7 @@ class Output(irassh.core.output.Output):
         self.api_user = cfg.get("output_cuckoo", "user")
         self.api_passwd = cfg.get("output_cuckoo", "passwd")
         self.cuckoo_force = int(cfg.get("output_cuckoo", "force"))
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -74,7 +74,7 @@ class Output(irassh.core.output.Output):
     def write(self, entry):
         """
         """
-        if entry["eventid"] == "irassh.session.file_download":
+        if entry["eventid"] == "qrassh.session.file_download":
             print("Sending file to Cuckoo")
             p = urlparse(entry["url"]).path
             if p == "":
@@ -89,7 +89,7 @@ class Output(irassh.core.output.Output):
             if self.cuckoo_force or self.cuckoo_check_if_dup(os.path.basename(entry["outfile"])) is False:
                 self.postfile(entry["outfile"], fileName)
 
-        elif entry["eventid"] == "irassh.session.file_upload":
+        elif entry["eventid"] == "qrassh.session.file_upload":
             if self.cuckoo_force or self.cuckoo_check_if_dup(os.path.basename(entry["outfile"])) is False:
                 print("Sending file to Cuckoo")
                 self.postfile(entry["outfile"], entry["filename"])

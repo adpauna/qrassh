@@ -52,7 +52,7 @@ class UserDB(object):
         save the user db
         """
 
-        # Note: this is subject to races between irassh instances, but hey ...
+        # Note: this is subject to races between qrassh instances, but hey ...
         with open(self.userdb_file, 'w') as f:
             for (login, passwd) in self.userdb:
                 f.write('%s:x:%s\n' % (login, passwd))
@@ -137,7 +137,7 @@ class AuthRandom(object):
         Save the user vars to json file
         """
         data = self.uservar
-        # Note: this is subject to races between irassh logins
+        # Note: this is subject to races between qrassh logins
         with open(self.uservar_file, 'wb') as fp:
             json.dump(data, fp)
 

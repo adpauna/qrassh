@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ###############################################################
-# This program creates a irassh file system pickle file.
+# This program creates a qrassh file system pickle file.
 #
 # This is meant to build a brand new filesystem.
 # To edit the file structure, please use 'bin/fsctl'
@@ -21,7 +21,7 @@ VERBOSE = False
 blacklist_files = [
             '/root/fs.pickle',
             '/root/createfs',
-            '*irassh*',
+            '*qrassh*',
             '*kippo*',
             ]
 

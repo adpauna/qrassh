@@ -1,10 +1,10 @@
 import MySQLdb
 import MySQLdb.cursors
 
-from irassh.core.config import *
+from qrassh.core.config import *
 
 
-class IRasshDao:
+class QRasshDao:
 
     def __init__(self, cfg):
         if cfg.has_option('output_mysql', 'port'):
@@ -69,11 +69,11 @@ class IRasshDao:
             return record["message"].strip()
 
 
-irasshDao = None
+qrasshDao = None
 
 
-def getIRasshDao():
-    global irasshDao
-    if irasshDao is None:
-        irasshDao = IRasshDao(CONFIG)
-    return irasshDao
+def getQRasshDao():
+    global qrasshDao
+    if qrasshDao is None:
+        qrasshDao = QRasshDao(CONFIG)
+    return qrasshDao

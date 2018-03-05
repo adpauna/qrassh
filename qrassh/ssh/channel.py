@@ -16,8 +16,8 @@ from zope.interface import implementer
 from twisted.python import log
 from twisted.conch.ssh import channel
 
-from irassh.core import ttylog
-from irassh.core.config import CONFIG
+from qrassh.core import ttylog
+from qrassh.core.config import CONFIG
 
 
 class CowrieSSHChannel(channel.SSHChannel):
@@ -29,7 +29,7 @@ class CowrieSSHChannel(channel.SSHChannel):
     bytesReceived = 0
     bytesReceivedLimit = 0
     bytesWritten = 0
-    name = b'irassh-ssh-channel'
+    name = b'qrassh-ssh-channel'
 
     def __init__(self, *args, **kw):
         """
@@ -58,7 +58,7 @@ class CowrieSSHChannel(channel.SSHChannel):
         self.ttylogFile = '%s/tty/%s-%s-%s.log' % \
             (self.ttylogPath, time.strftime('%Y%m%d-%H%M%S'),
             self.conn.transport.transportId, self.id)
-        log.msg(eventid='irassh.log.open',
+        log.msg(eventid='qrassh.log.open',
             ttylog=self.ttylogFile,
             format='Opening TTY Log: %(ttylog)s')
         ttylog.ttylog_open(self.ttylogFile, time.time())
@@ -68,7 +68,7 @@ class CowrieSSHChannel(channel.SSHChannel):
     def closed(self):
         """
         """
-        log.msg(eventid='irassh.log.closed',
+        log.msg(eventid='qrassh.log.closed',
             format='Closing TTY Log: %(ttylog)s after %(duration)d seconds',
             ttylog=self.ttylogFile,
             size=self.bytesReceived+self.bytesWritten,

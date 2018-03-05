@@ -90,7 +90,7 @@ class Passwd(object):
     def save(self):
         """
         Save the user db
-        Note: this is subject to races between irassh instances, but hey ...
+        Note: this is subject to races between qrassh instances, but hey ...
         """
 #        with open(self.passwd_file, 'w') as f:
 #            for (login, uid, passwd) in self.userdb:
@@ -165,7 +165,7 @@ class Group(object):
     def save(self):
         """
         Save the group db
-        Note: this is subject to races between irassh instances, but hey ...
+        Note: this is subject to races between qrassh instances, but hey ...
         """
 #        with open(self.group_file, 'w') as f:
 #            for (login, uid, passwd) in self.userdb:

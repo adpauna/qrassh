@@ -6,7 +6,7 @@ import getopt
 
 from twisted.python import log
 
-from irassh.shell.honeypot import HoneyPotCommand,StdOutStdErrEmulationProtocol
+from qrassh.shell.honeypot import HoneyPotCommand,StdOutStdErrEmulationProtocol
 
 commands = {}
 
@@ -122,7 +122,7 @@ Sudoers I/O plugin version 1.8.5p2\n''')
                 self.environ['PATH'].split(':'))
 
             if cmdclass:
-                log.msg(eventid='irassh.command.success',
+                log.msg(eventid='qrassh.command.success',
                         input=line,
                         format='Command found: %(input)s')
                 command = StdOutStdErrEmulationProtocol(self.protocol,cmdclass,parsed_arguments[1:], None ,None)

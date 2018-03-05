@@ -1,6 +1,6 @@
 from __future__ import division, absolute_import
 
-import irassh.core.output
+import qrassh.core.output
 
 from csirtgsdk.indicator import Indicator
 from csirtgsdk.client import Client
@@ -15,9 +15,9 @@ TOKEN = os.environ.get('CSIRG_TOKEN')
 DESCRIPTION = os.environ.get('CSIRTG_DESCRIPTION', 'random scanning activity')
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     def __init__(self, cfg):
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
         self.user = cfg.get('output_csirtg', 'username') or USERNAME
         self.feed = cfg.get('output_csirtg', 'feed') or FEED
         self.token = cfg.get('output_csirtg', 'token') or TOKEN
@@ -40,7 +40,7 @@ class Output(irassh.core.output.Output):
         ts = e['timestamp']
         system = e['system']
 
-        if system not in ['irassh.ssh.factory.CowrieSSHFactory', 'irassh.telnet.transport.HoneyPotTelnetFactory']:
+        if system not in ['qrassh.ssh.factory.CowrieSSHFactory', 'qrassh.telnet.transport.HoneyPotTelnetFactory']:
             return
 
         today = str(datetime.now().date())
@@ -58,7 +58,7 @@ class Output(irassh.core.output.Output):
 
         tags = 'scanner,ssh'
         port = 22
-        if e['system'] == 'irassh.telnet.transport.HoneyPotTelnetFactory':
+        if e['system'] == 'qrassh.telnet.transport.HoneyPotTelnetFactory':
             tags = 'scanner,telnet'
             port = 23
 

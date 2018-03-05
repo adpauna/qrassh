@@ -31,19 +31,19 @@ from __future__ import division, absolute_import
 import syslog
 import twisted.python.syslog
 
-import irassh.core.output
-import irassh.core.cef
+import qrassh.core.output
+import qrassh.core.cef
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
 
     def __init__(self, cfg):
         """
         """
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
         facilityString = cfg.get('output_localsyslog', 'facility')
         self.format = cfg.get('output_localsyslog', 'format')
         self.facility = vars(syslog)['LOG_' + facilityString]
-        self.syslog = twisted.python.syslog.SyslogObserver(prefix='irassh', facility=self.facility)
+        self.syslog = twisted.python.syslog.SyslogObserver(prefix='qrassh', facility=self.facility)
 
 
     def start(self):
@@ -63,9 +63,9 @@ class Output(irassh.core.output.Output):
         """
         if self.format == 'cef':
             self.syslog.emit({
-                'message': irassh.core.cef.formatCef(logentry),
+                'message': qrassh.core.cef.formatCef(logentry),
                 'isError': False,
-                'system': 'irassh'
+                'system': 'qrassh'
             })
         else:
             # message appears with additional spaces if message key is defined

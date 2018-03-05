@@ -13,8 +13,8 @@ from twisted.python import log
 from twisted.conch.interfaces import ISession
 from twisted.conch.ssh import session
 
-from irassh.shell import protocol
-from irassh.insults import insults
+from qrassh.shell import protocol
+from qrassh.insults import insults
 
 
 @implementer(ISession)
@@ -63,7 +63,7 @@ class SSHSessionForCowrieUser(object):
         """
         """
         self.environ['TERM'] = terminal
-        log.msg(eventid='irassh.client.size', width=windowSize[0], height=windowSize[1],
+        log.msg(eventid='qrassh.client.size', width=windowSize[0], height=windowSize[1],
             format='Terminal Size: %(width)s %(height)s')
         self.windowSize = windowSize
         return None

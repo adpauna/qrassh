@@ -8,10 +8,10 @@ requests
 pyes
 
 # mysql
-# If this fails, see documentation /home/irassh/irassh/doc/sql/README.md
+# If this fails, see documentation /home/qrassh/qrassh/doc/sql/README.md
 #
 # There are two options, mysqlclient is newer and provides Python3 support.
-# MySQL-python is the classic option with irassh and has been tested.
+# MySQL-python is the classic option with qrassh and has been tested.
 mysqlclient
 # MySQL-python
 
@@ -28,5 +28,5 @@ botocore
 slackclient
 
 # splunklegacy
-# For more info, see documentation /home/irassh/irassh/doc/splunk/README.md
+# For more info, see documentation /home/qrassh/qrassh/doc/splunk/README.md
 splunk-sdk

@@ -15,7 +15,7 @@ import socket
 from twisted.python import log
 from twisted.internet import reactor
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 

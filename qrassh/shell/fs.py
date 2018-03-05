@@ -22,7 +22,7 @@ import errno
 
 from twisted.python import log
 
-from irassh.core.config import CONFIG
+from qrassh.core.config import CONFIG
 
 PICKLE = pickle.load(open(CONFIG.get('honeypot', 'filesystem_file'), 'rb'))
 
@@ -404,7 +404,7 @@ class HoneyPotFilesystem(object):
             #os.symlink(shasum, self.tempfiles[fd])
             self.update_realfile(self.getfile(self.filenames[fd]), shasumfile)
             log.msg(format='SFTP Uploaded file \"%(filename)s\" to %(outfile)s',
-                    eventid='irassh.session.file_upload',
+                    eventid='qrassh.session.file_upload',
                     filename=os.path.basename(self.filenames[fd]),
                     outfile=shasumfile,
                     shasum=shasum)

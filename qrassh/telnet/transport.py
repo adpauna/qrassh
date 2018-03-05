@@ -20,7 +20,7 @@ from twisted.conch.telnet import AuthenticatingTelnetProtocol, ECHO, TRAPSIG, \
                                  SGA, NAWS, MODE, LINEMODE, TelnetTransport, AlreadyNegotiating
 from twisted.protocols.policies import TimeoutMixin
 
-from irassh.core.credentials import UsernamePasswordIP
+from qrassh.core.credentials import UsernamePasswordIP
 
 class HoneyPotTelnetFactory(protocol.ServerFactory):
     """
@@ -217,7 +217,7 @@ class CowrieTelnetTransport(TelnetTransport, TimeoutMixin):
         self.startTime = time.time()
         self.setTimeout(300)
 
-        log.msg(eventid='irassh.session.connect',
+        log.msg(eventid='qrassh.session.connect',
            format='New connection: %(src_ip)s:%(src_port)s (%(dst_ip)s:%(dst_port)s) [session: T%(sessionno)s]',
            src_ip=self.transport.getPeer().host, src_port=self.transport.getPeer().port,
            dst_ip=self.transport.getHost().host, dst_port=self.transport.getHost().port,
@@ -244,7 +244,7 @@ class CowrieTelnetTransport(TelnetTransport, TimeoutMixin):
         self.setTimeout(None)
         TelnetTransport.connectionLost(self, reason)
         duration = time.time() - self.startTime
-        log.msg(eventid='irassh.session.closed',
+        log.msg(eventid='qrassh.session.closed',
             format='Connection lost after %(duration)d seconds',
             duration=duration)
 

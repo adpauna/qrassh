@@ -27,21 +27,21 @@ class DBLogger(object):
         self.re_sessionlog = re.compile(
             r'.*HoneyPotSSHTransport,([0-9]+),[:a-f0-9.]+$')
 
-        # irassh.session.connect is special since it kicks off new logging session,
+        # qrassh.session.connect is special since it kicks off new logging session,
         # and is not handled here
         self.events = {
-            'irassh.login.success': self.handleLoginSucceeded,
-            'irassh.login.failed': self.handleLoginFailed,
-            'irassh.log.open': self.handleTTYLogOpened,
-            'irassh.command.action.success': self.handleCommand,
-            'irassh.command.success': self.handleCommand,
-            'irassh.command.failed': self.handleUnknownCommand,
-            'irassh.session.file_download': self.handleFileDownload,
-            'irassh.command.input': self.handleInput,
-            'irassh.client.version': self.handleClientVersion,
-            'irassh.client.size': self.handleTerminalSize,
-            'irassh.session.closed': self._connectionLost,
-            'irassh.log.closed': self.handleTTYLogClosed,
+            'qrassh.login.success': self.handleLoginSucceeded,
+            'qrassh.login.failed': self.handleLoginFailed,
+            'qrassh.log.open': self.handleTTYLogOpened,
+            'qrassh.command.action.success': self.handleCommand,
+            'qrassh.command.success': self.handleCommand,
+            'qrassh.command.failed': self.handleUnknownCommand,
+            'qrassh.session.file_download': self.handleFileDownload,
+            'qrassh.command.input': self.handleInput,
+            'qrassh.client.version': self.handleClientVersion,
+            'qrassh.client.size': self.handleTerminalSize,
+            'qrassh.session.closed': self._connectionLost,
+            'qrassh.log.closed': self.handleTTYLogClosed,
         }
 
         self.reported_ssh_port = None
@@ -86,7 +86,7 @@ class DBLogger(object):
             return
 
         # connection event is special. adds to list
-        if ev['eventid'] == 'irassh.session.connect':
+        if ev['eventid'] == 'qrassh.session.connect':
             sessionno = ev['sessionno']
             peerIP, peerPort = ev['src_ip'], ev['src_port']
             hostIP, hostPort = ev['dst_ip'], ev['dst_port']

@@ -39,7 +39,7 @@ class HoneyPotSSHTransport(transport.SSHServerTransport, TimeoutMixin):
         if ipv4_search != None:
             src_ip = ipv4_search.group(1)
 
-        log.msg(eventid='irassh.session.connect',
+        log.msg(eventid='qrassh.session.connect',
            format='New connection: %(src_ip)s:%(src_port)s (%(dst_ip)s:%(dst_port)s) [session: %(session)s]',
            src_ip=src_ip, src_port=self.transport.getPeer().port,
            dst_ip=self.transport.getHost().host, dst_port=self.transport.getHost().port,
@@ -138,7 +138,7 @@ class HoneyPotSSHTransport(transport.SSHServerTransport, TimeoutMixin):
         strings, rest = k[:-1], k[-1]
         (kexAlgs, keyAlgs, encCS, encSC, macCS, macSC, compCS, compSC, langCS,
             langSC) = [s.split(b',') for s in strings]
-        log.msg(eventid='irassh.client.version', version=self.otherVersionString,
+        log.msg(eventid='qrassh.client.version', version=self.otherVersionString,
             kexAlgs=kexAlgs, keyAlgs=keyAlgs, encCS=encCS, macCS=macCS,
             compCS=compCS, format='Remote SSH version: %(version)s')
 
@@ -183,7 +183,7 @@ class HoneyPotSSHTransport(transport.SSHServerTransport, TimeoutMixin):
         self.transport.connectionLost(reason)
         self.transport = None
         duration = time.time() - self.logintime
-        log.msg(eventid='irassh.session.closed',
+        log.msg(eventid='qrassh.session.closed',
             format='Connection lost after %(duration)d seconds',
             duration=duration)
 

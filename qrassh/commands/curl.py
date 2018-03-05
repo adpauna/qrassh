@@ -16,8 +16,8 @@ from twisted.web import client
 from twisted.internet import reactor, ssl
 from twisted.python import log, compat
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 """
 """
@@ -323,7 +323,7 @@ Options: (H) means HTTP/HTTPS only, (F) means FTP only
             os.remove(self.safeoutfile)
             log.msg("Not storing duplicate content " + shasum)
 
-        self.protocol.logDispatch(eventid='irassh.session.file_download',
+        self.protocol.logDispatch(eventid='qrassh.session.file_download',
                                   format='Downloaded URL (%(url)s) with SHA-256 %(shasum)s to %(outfile)s',
                                   url=self.url,
                                   outfile=hashPath,
@@ -351,7 +351,7 @@ Options: (H) means HTTP/HTTPS only, (F) means FTP only
         # Real curl also adds this:
         # self.write('%s ERROR 404: Not Found.\n' % \
         #    time.strftime('%Y-%m-%d %T'))
-        self.protocol.logDispatch(eventid='irassh.session.file_download.failed',
+        self.protocol.logDispatch(eventid='qrassh.session.file_download.failed',
                                   format='Attempt to download file(s) from URL (%(url)s) failed',
                                   url=self.url)
         self.exit()

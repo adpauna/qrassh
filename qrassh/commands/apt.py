@@ -9,7 +9,7 @@ import re
 from twisted.internet import reactor, defer
 from twisted.internet.defer import inlineCallbacks
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 

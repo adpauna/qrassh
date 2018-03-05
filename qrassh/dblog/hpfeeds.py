@@ -12,7 +12,7 @@ from datetime import datetime
 
 from twisted.python import log
 
-from irassh.core import dblog
+from qrassh.core import dblog
 
 BUFSIZ = 16384
 
@@ -31,7 +31,7 @@ SIZES = {
 	OP_SUBSCRIBE: 5+256*2,
 }
 
-COWRIECHAN = 'irassh.sessions'
+COWRIECHAN = 'qrassh.sessions'
 
 class BadClient(Exception):
         pass

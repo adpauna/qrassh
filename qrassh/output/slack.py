@@ -39,16 +39,16 @@ import time
 import twisted.python.logfile
 from slackclient import SlackClient
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     Docstring class
     """
 
     def __init__(self, cfg):
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
         self.slack_channel = cfg.get('output_slack', 'channel')
         self.slack_token = cfg.get('output_slack', 'token')
 

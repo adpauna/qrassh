@@ -17,7 +17,7 @@ def cowrieOpenConnectForwardingClient(remoteWindow, remoteMaxPacket, data, avata
     """
     remoteHP, origHP = forwarding.unpackOpen_direct_tcpip(data)
 
-    log.msg(eventid='irassh.direct-tcpip.request',
+    log.msg(eventid='qrassh.direct-tcpip.request',
         format='direct-tcp connection request to %(dst_ip)s:%(dst_port)s from %(src_ip)s:%(src_port)s',
         dst_ip=remoteHP[0], dst_port=remoteHP[1],
         src_ip=origHP[0], src_port=origHP[1])
@@ -41,7 +41,7 @@ def cowrieOpenConnectForwardingClient(remoteWindow, remoteMaxPacket, data, avata
                 redirects[int(destPort)] = (redirectHP[0], int(redirectHP[1]))
         if remoteHP[1] in redirects:
             remoteHPNew = redirects[remoteHP[1]]
-            log.msg(eventid='irassh.direct-tcpip.redirect',
+            log.msg(eventid='qrassh.direct-tcpip.redirect',
                 format='redirected direct-tcp connection request %(src_ip)s:%(src_port)d->%(dst_ip)s:%(dst_port)d to %(new_ip)s:%(new_port)d',
                     new_ip=remoteHPNew[0], new_port=remoteHPNew[1],
                     dst_ip=remoteHP[0], dst_port=remoteHP[1],
@@ -58,7 +58,7 @@ class SSHConnectForwardingChannel(forwarding.SSHConnectForwardingChannel):
     """
     This class modifies the original to close the connection
     """
-    name = b'irassh-forwarded-direct-tcpip'
+    name = b'qrassh-forwarded-direct-tcpip'
 
 
     def eofReceived(self):
@@ -70,7 +70,7 @@ class FakeForwardingChannel(forwarding.SSHConnectForwardingChannel):
     """
     This channel does not forward, but just logs requests.
     """
-    name = b'irassh-discarded-direct-tcpip'
+    name = b'qrassh-discarded-direct-tcpip'
 
     def channelOpen(self, specificData):
         """
@@ -81,7 +81,7 @@ class FakeForwardingChannel(forwarding.SSHConnectForwardingChannel):
     def dataReceived(self, data):
         """
         """
-        log.msg(eventid='irassh.direct-tcpip.data',
+        log.msg(eventid='qrassh.direct-tcpip.data',
             format='discarded direct-tcp forward request to %(dst_ip)s:%(dst_port)s with data %(data)s',
             dst_ip=self.hostport[0], dst_port=self.hostport[1], data=repr(data))
         self._close("Connection refused")

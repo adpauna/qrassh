@@ -19,8 +19,8 @@ from twisted.python import log, failure
 from twisted.conch import error
 from twisted.conch.ssh import keys
 
-from irassh.core import credentials
-from irassh.core import auth
+from qrassh.core import credentials
+from qrassh.core import auth
 
 @implementer(ICredentialsChecker)
 class HoneypotPublicKeyChecker(object):
@@ -34,7 +34,7 @@ class HoneypotPublicKeyChecker(object):
         """
         """
         _pubKey = keys.Key.fromString(credentials.blob)
-        log.msg(eventid='irassh.client.fingerprint',
+        log.msg(eventid='qrassh.client.fingerprint',
                 format='public key attempt for user %(username)s with fingerprint %(fingerprint)s',
                 username=credentials.username,
                 fingerprint=_pubKey.fingerprint())
@@ -110,7 +110,7 @@ class HoneypotPasswordChecker(object):
         # Is the auth_class defined in the config file?
         if self.cfg.has_option('honeypot', 'auth_class'):
             authclass = self.cfg.get('honeypot', 'auth_class')
-            authmodule = "irassh.core.auth"
+            authmodule = "qrassh.core.auth"
 
             # Check if authclass exists in this module
             if hasattr(modules[authmodule], authclass):
@@ -122,14 +122,14 @@ class HoneypotPasswordChecker(object):
         theauth = authname(self.cfg)
 
         if theauth.checklogin(theusername, thepassword, ip):
-            log.msg(eventid='irassh.login.success',
+            log.msg(eventid='qrassh.login.success',
                     format='login attempt [%(username)s/%(password)s] succeeded',
                     username=theusername, password=thepassword)
                     #username=theusername.encode('string-escape'),
                     #password=thepassword.encode('string-escape'))
             return True
         else:
-            log.msg(eventid='irassh.login.failed',
+            log.msg(eventid='qrassh.login.failed',
                     format='login attempt [%(username)s/%(password)s] failed',
                     username=theusername, password=thepassword)
                     #username=theusername.encode('string-escape'),

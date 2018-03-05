@@ -30,15 +30,15 @@ from __future__ import division, absolute_import
 
 from twisted.python import log
 
-import irassh.core.output
-import irassh.core.cef
+import qrassh.core.output
+import qrassh.core.cef
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
 
     def __init__(self, cfg):
         """
         """
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
         self.format = cfg.get('output_textlog', 'format')
         self.outfile = open(cfg.get('output_textlog', 'logfile'), 'a')
 
@@ -60,7 +60,7 @@ class Output(irassh.core.output.Output):
         """
         if self.format == 'cef':
             self.outfile.write(logentry['timestamp']+" ")
-            self.outfile.write(irassh.core.cef.formatCef(logentry) + '\n')
+            self.outfile.write(qrassh.core.cef.formatCef(logentry) + '\n')
         else:
             self.outfile.write(logentry['timestamp']+" ")
             self.outfile.write(logentry['message']+"\n")

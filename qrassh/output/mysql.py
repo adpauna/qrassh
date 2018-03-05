@@ -11,7 +11,7 @@ from twisted.internet import defer
 from twisted.enterprise import adbapi
 from twisted.python import log
 
-import irassh.core.output
+import qrassh.core.output
 
 class ReconnectingConnectionPool(adbapi.ConnectionPool):
     """
@@ -40,7 +40,7 @@ class ReconnectingConnectionPool(adbapi.ConnectionPool):
 
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     docstring here
     """
@@ -49,7 +49,7 @@ class Output(irassh.core.output.Output):
 
     def __init__(self, cfg):
         self.cfg = cfg
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -106,7 +106,7 @@ class Output(irassh.core.output.Output):
         docstring here
         """
 
-        if entry["eventid"] == 'irassh.session.connect':
+        if entry["eventid"] == 'qrassh.session.connect':
             r = yield self.db.runQuery(
                 "SELECT `id` FROM `sensors` WHERE `ip` = %s", (self.sensor,))
             if r:
@@ -121,60 +121,60 @@ class Output(irassh.core.output.Output):
                 +  " VALUES (%s, FROM_UNIXTIME(%s), %s, %s)",
                 (entry["session"], entry["time"], sensorid, entry["src_ip"]))
 
-        elif entry["eventid"] == 'irassh.login.success':
+        elif entry["eventid"] == 'qrassh.login.success':
             self.simpleQuery('INSERT INTO `auth` (`session`, `success`' + \
                 ', `username`, `password`, `timestamp`)' + \
                 ' VALUES (%s, %s, %s, %s, FROM_UNIXTIME(%s))',
                 (entry["session"], 1, entry['username'], entry['password'],
                 entry["time"]))
 
-        elif entry["eventid"] == 'irassh.login.failed':
+        elif entry["eventid"] == 'qrassh.login.failed':
             self.simpleQuery('INSERT INTO `auth` (`session`, `success`' + \
                 ', `username`, `password`, `timestamp`)' + \
                 ' VALUES (%s, %s, %s, %s, FROM_UNIXTIME(%s))',
                 (entry["session"], 0, entry['username'], entry['password'],
                 entry["time"]))
 
-        elif entry["eventid"] == 'irassh.command.action.success':
+        elif entry["eventid"] == 'qrassh.command.action.success':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `success`, `input`, `action`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s , %s, %s)',
                 (entry["session"], entry["time"], 1, entry["input"], entry["action"]))
 
-        elif entry["eventid"] == 'irassh.command.success':
+        elif entry["eventid"] == 'qrassh.command.success':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `success`, `input`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s , %s)',
                 (entry["session"], entry["time"], 1, entry["input"]))
 
-        elif entry["eventid"] == 'irassh.command.failed':
+        elif entry["eventid"] == 'qrassh.command.failed':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `success`, `input`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s , %s)',
                 (entry["session"], entry["time"], 0, entry["input"]))
 
-        elif entry["eventid"] == 'irassh.session.file_download':
+        elif entry["eventid"] == 'qrassh.session.file_download':
             self.simpleQuery('INSERT INTO `downloads`' + \
                 ' (`session`, `timestamp`, `url`, `outfile`, `shasum`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s, %s, %s)',
                 (entry["session"], entry["time"],
                 entry['url'], entry['outfile'], entry['shasum']))
 
-        elif entry["eventid"] == 'irassh.session.file_upload':
+        elif entry["eventid"] == 'qrassh.session.file_upload':
             self.simpleQuery('INSERT INTO `downloads`' + \
                 ' (`session`, `timestamp`, `url`, `outfile`, `shasum`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s, %s, %s)',
                 (entry["session"], entry["time"],
                 '', entry['outfile'], entry['shasum']))
 
-        elif entry["eventid"] == 'irassh.session.input':
+        elif entry["eventid"] == 'qrassh.session.input':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `realm`, `input`)' + \
                 ' VALUES (%s, FROM_UNIXTIME(%s), %s , %s)',
                 (entry["session"], entry["time"],
                 entry["realm"], entry["input"]))
 
-        elif entry["eventid"] == 'irassh.client.version':
+        elif entry["eventid"] == 'qrassh.client.version':
             r = yield self.db.runQuery(
                 'SELECT `id` FROM `clients` WHERE `version` = %s', \
                 (entry['version'],))
@@ -190,23 +190,23 @@ class Output(irassh.core.output.Output):
                 'UPDATE `sessions` SET `client` = %s WHERE `id` = %s',
                 (id, entry["session"]))
 
-        elif entry["eventid"] == 'irassh.client.size':
+        elif entry["eventid"] == 'qrassh.client.size':
             self.simpleQuery(
                 'UPDATE `sessions` SET `termsize` = %s WHERE `id` = %s',
                 ('%sx%s' % (entry['width'], entry['height']),
                     entry["session"]))
 
-        elif entry["eventid"] == 'irassh.session.closed':
+        elif entry["eventid"] == 'qrassh.session.closed':
             self.simpleQuery(
                 'UPDATE `sessions` SET `endtime` = FROM_UNIXTIME(%s)' + \
                 ' WHERE `id` = %s', (entry["time"], entry["session"]))
 
-        elif entry["eventid"] == 'irassh.log.closed':
+        elif entry["eventid"] == 'qrassh.log.closed':
             self.simpleQuery(
                 'INSERT INTO `ttylog` (`session`, `ttylog`, `size`) VALUES (%s, %s, %s)',
                 (entry["session"], entry["ttylog"], entry["size"]))
 
-        elif entry["eventid"] == 'irassh.client.fingerprint':
+        elif entry["eventid"] == 'qrassh.client.fingerprint':
             self.simpleQuery(
                 'INSERT INTO `keyfingerprints` (`session`, `username`, `fingerprint`) VALUES (%s, %s, %s)',
                 (entry["session"], entry["username"], entry["fingerprint"]))

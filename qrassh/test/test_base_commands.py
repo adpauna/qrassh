@@ -7,9 +7,9 @@ from __future__ import division, absolute_import
 
 from twisted.trial import unittest
 
-from irassh.shell import protocol
-from irassh.core import config
-from irassh.test import fake_server, fake_transport
+from qrassh.shell import protocol
+from qrassh.core import config
+from qrassh.test import fake_server, fake_transport
 import json
 
 
@@ -18,9 +18,9 @@ class ShellBaseCommandsTests(unittest.TestCase):
 
 
     def setUp(self):
-        with open('../irassh/test/expected_results.json') as data_file:
+        with open('../qrassh/test/expected_results.json') as data_file:
             self.data = json.load(data_file)
-        self.cfg = config.readConfigFile("../irassh/test/unittests.cfg")
+        self.cfg = config.readConfigFile("../qrassh/test/unittests.cfg")
         self.proto = protocol.HoneyPotInteractiveProtocol \
             (fake_server.FakeAvatar(fake_server.FakeServer(self.cfg)))
         self.tr = fake_transport.FakeTransport("1.1.1.1", "1111")
@@ -204,7 +204,7 @@ class ShellBaseCommandsTests(unittest.TestCase):
 
 class ShellFileCommandsTests(unittest.TestCase):
     def setUp(self):
-        self.cfg = config.readConfigFile("../irassh/test/unittests.cfg")
+        self.cfg = config.readConfigFile("../qrassh/test/unittests.cfg")
         self.proto = protocol.HoneyPotInteractiveProtocol(
             fake_server.FakeAvatar(fake_server.FakeServer(self.cfg)))
         self.tr = fake_transport.FakeTransport("1.1.1.1", "1111")
@@ -278,7 +278,7 @@ class ShellFileCommandsTests(unittest.TestCase):
 
 class ShellPipeCommandsTests(unittest.TestCase):
     def setUp(self):
-        self.cfg = config.readConfigFile("../irassh/test/unittests.cfg")
+        self.cfg = config.readConfigFile("../qrassh/test/unittests.cfg")
         self.proto = protocol.HoneyPotInteractiveProtocol(
             fake_server.FakeAvatar(fake_server.FakeServer(self.cfg)))
         self.tr = fake_transport.FakeTransport("1.1.1.1", "1111")

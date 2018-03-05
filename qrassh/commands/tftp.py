@@ -7,11 +7,11 @@ import re
 import tftpy
 import os
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
-from irassh.shell.customparser import CustomParser
-from irassh.shell.customparser import OptionNotFound
-from irassh.shell.customparser import ExitException
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
+from qrassh.shell.customparser import CustomParser
+from qrassh.shell.customparser import OptionNotFound
+from qrassh.shell.customparser import ExitException
 
 """
 """
@@ -101,7 +101,7 @@ class command_tftp(HoneyPotCommand):
                 os.remove(self.safeoutfile)
                 log.msg("Not storing duplicate content " + shasum)
 
-            self.protocol.logDispatch(eventid='irassh.session.file_download',
+            self.protocol.logDispatch(eventid='qrassh.session.file_download',
                                       format='Downloaded tftpFile (%(url)s) with SHA-256 %(shasum)s to %(outfile)s',
                                       url=url,
                                       outfile=hash_path,

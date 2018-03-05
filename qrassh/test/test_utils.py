@@ -8,7 +8,7 @@ from twisted.application.service import MultiService
 from twisted.internet import protocol, reactor
 from twisted.trial import unittest
 
-from irassh.core.utils import durationHuman, get_endpoints_from_section, create_endpoint_services
+from qrassh.core.utils import durationHuman, get_endpoints_from_section, create_endpoint_services
 
 
 def get_config(config_string):
@@ -19,12 +19,12 @@ def get_config(config_string):
 
 class UtilsTestCase(unittest.TestCase):
     """
-    Tests for irassh/core/utils.py
+    Tests for qrassh/core/utils.py
     """
 
     def test_durationHuman(self):
         """
-        Test of irassh.core.utils.durationHuman
+        Test of qrassh.core.utils.durationHuman
         """
         minute = durationHuman(60)
         self.assertEqual(minute, "01:00")

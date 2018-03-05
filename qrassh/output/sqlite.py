@@ -10,15 +10,15 @@ from twisted.internet import defer
 from twisted.enterprise import adbapi
 from twisted.python import log
 
-import irassh.core.output
+import qrassh.core.output
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
     def __init__(self, cfg):
         self.cfg = cfg
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -66,7 +66,7 @@ class Output(irassh.core.output.Output):
         docstring here
         """
 
-        if entry["eventid"] == 'irassh.session.connect':
+        if entry["eventid"] == 'qrassh.session.connect':
             r = yield self.db.runQuery(
                 "SELECT `id` FROM `sensors` WHERE `ip` = ?", (self.sensor,))
             if r and r[0][0]:
@@ -82,49 +82,49 @@ class Output(irassh.core.output.Output):
                 (entry["session"], entry["timestamp"],
                     sensorid, entry["src_ip"]))
 
-        elif entry["eventid"] == 'irassh.login.success':
+        elif entry["eventid"] == 'qrassh.login.success':
             self.simpleQuery('INSERT INTO `auth` (`session`, `success`' + \
                 ', `username`, `password`, `timestamp`)' + \
                 ' VALUES (?, ?, ?, ?, ?)',
                 (entry["session"], 1, entry['username'], entry['password'],
                 entry["timestamp"]))
 
-        elif entry["eventid"] == 'irassh.login.failed':
+        elif entry["eventid"] == 'qrassh.login.failed':
             self.simpleQuery('INSERT INTO `auth` (`session`, `success`' + \
                 ', `username`, `password`, `timestamp`)' + \
                 ' VALUES (?, ?, ?, ?, ?)',
                 (entry["session"], 0, entry['username'], entry['password'],
                 entry["timestamp"]))
 
-        elif entry["eventid"] == 'irassh.command.success':
+        elif entry["eventid"] == 'qrassh.command.success':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `success`, `input`)' + \
                 ' VALUES (?, ?, ?, ?)',
                 (entry["session"], entry["timestamp"],
                 1, entry["input"]))
 
-        elif entry["eventid"] == 'irassh.command.failed':
+        elif entry["eventid"] == 'qrassh.command.failed':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `success`, `input`)' + \
                 ' VALUES (?, ?, ?, ?)',
                 (entry["session"], entry["timestamp"],
                 0, entry["input"]))
 
-        elif entry["eventid"] == 'irassh.session.file_download':
+        elif entry["eventid"] == 'qrassh.session.file_download':
             self.simpleQuery('INSERT INTO `downloads`' + \
                 ' (`session`, `timestamp`, `url`, `outfile`, `shasum`)' + \
                 ' VALUES (?, ?, ?, ?, ?)',
                 (entry["session"], entry["timestamp"],
                 entry['url'], entry['outfile'], entry['shasum']))
 
-        elif entry["eventid"] == 'irassh.session.file_download':
+        elif entry["eventid"] == 'qrassh.session.file_download':
             self.simpleQuery('INSERT INTO `input`' + \
                 ' (`session`, `timestamp`, `realm`, `input`)' + \
                 ' VALUES (?, ?, ?, ?)',
                 (entry["session"], entry["timestamp"],
                 entry["realm"], entry["input"]))
 
-        elif entry["eventid"] == 'irassh.client.version':
+        elif entry["eventid"] == 'qrassh.client.version':
             r = yield self.db.runQuery(
                 'SELECT `id` FROM `clients` WHERE `version` = ?', \
                 (entry['version'],))
@@ -140,23 +140,23 @@ class Output(irassh.core.output.Output):
                 'UPDATE `sessions` SET `client` = ? WHERE `id` = ?',
                 (id, entry["session"]))
 
-        elif entry["eventid"] == 'irassh.client.size':
+        elif entry["eventid"] == 'qrassh.client.size':
             self.simpleQuery(
                 'UPDATE `sessions` SET `termsize` = ? WHERE `id` = ?',
                 ('%sx%s' % (entry['width'], entry['height']),
                     entry["session"]))
 
-        elif entry["eventid"] == 'irassh.session.closed':
+        elif entry["eventid"] == 'qrassh.session.closed':
             self.simpleQuery(
                 'UPDATE `sessions` SET `endtime` = ?' + \
                 ' WHERE `id` = ?', (entry["timestamp"], entry["session"]))
 
-        elif entry["eventid"] == 'irassh.log.closed':
+        elif entry["eventid"] == 'qrassh.log.closed':
             self.simpleQuery(
                 'INSERT INTO `ttylog` (`session`, `ttylog`, `size`) VALUES (?, ?, ?)',
                 (entry["session"], entry["ttylog"], entry["size"]))
 
-        elif entry["eventid"] == 'irassh.client.fingerprint':
+        elif entry["eventid"] == 'qrassh.client.fingerprint':
             self.simpleQuery(
                 'INSERT INTO `keyfingerprints` (`session`, `username`, `fingerprint`) VALUES (?, ?, ?)',
                 (entry["session"], entry["username"], entry["fingerprint"]))

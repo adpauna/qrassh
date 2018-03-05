@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 

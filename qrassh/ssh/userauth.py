@@ -18,7 +18,7 @@ from twisted.conch.ssh import userauth
 from twisted.conch.ssh.common import NS, getNS
 from twisted.conch import error
 
-from irassh.core import credentials
+from qrassh.core import credentials
 
 
 class HoneyPotSSHUserAuthServer(userauth.SSHUserAuthServer):

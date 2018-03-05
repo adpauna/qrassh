@@ -19,7 +19,7 @@ from twisted.conch.ssh import filetransfer
 from twisted.conch.ssh.filetransfer import FXF_READ, FXF_WRITE, FXF_APPEND, FXF_CREAT, FXF_TRUNC, FXF_EXCL
 import twisted.conch.ls
 
-import irassh.shell.pwd as pwd
+import qrassh.shell.pwd as pwd
 
 
 @implementer(ISFTPFile)

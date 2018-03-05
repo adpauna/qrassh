@@ -2,9 +2,9 @@
 #Change the below to yes if you are using authbind to listen to port 22
 AUTHBIND_ENABLED=no
 
-# To override the default virtual enviroment, either set IRASSH_VIRTUAL_ENV or
-# activate it before starting Irassh
-#IRASSH_VIRTUAL_ENV=my-env
+# To override the default virtual enviroment, either set qrassh_VIRTUAL_ENV or
+# activate it before starting qrassh
+#qrassh_VIRTUAL_ENV=my-env
 
 #Change the below to -n to disable daemonizing (for instance when using supervisor)
 DAEMONIZE=""
@@ -13,19 +13,19 @@ DAEMONIZE=""
 ## don't modify below here ##
 ################################################################################
 
-# The default Python virtual environment is "irassh-env". If you set the variable
-# IRASSH_VIRTUAL_ENV you can override this
-DEFAULT_VIRTUAL_ENV=irassh-env
+# The default Python virtual environment is "qrassh-env". If you set the variable
+# qrassh_VIRTUAL_ENV you can override this
+DEFAULT_VIRTUAL_ENV=qrassh-env
 
-find_irassh_directory() {
-    # Determine irassh directory
+find_qrassh_directory() {
+    # Determine qrassh directory
     if [[ "$0" = /* ]]
     then
-        IRASSHDIR=$(dirname $0)/..
+        qrasshDIR=$(dirname $0)/..
     else
-        IRASSHDIR=$(dirname $PWD/$0)/..
+        qrasshDIR=$(dirname $PWD/$0)/..
     fi
-    IRASSHDIR=$(cd ${IRASSHDIR} && pwd -P 2>/dev/null || pwd)
+    qrasshDIR=$(cd ${qrasshDIR} && pwd -P 2>/dev/null || pwd)
 }
 
 activate_venv() {
@@ -39,37 +39,37 @@ activate_venv() {
     return 0
 }
 
-irassh_status() {
+qrassh_status() {
     # Print status
     PID=$(cat ${PIDFILE} 2>/dev/null || echo "")
     if [ -n "$PID" ]; then
         if ps -p "$PID" 2>&1 >/dev/null; then
-            echo "irassh is running (PID: ${PID})."
+            echo "qrassh is running (PID: ${PID})."
         else
-            echo "irassh is not running (PID: ${PID})."
+            echo "qrassh is not running (PID: ${PID})."
             echo "Removing stale PID file"
             rm -f ${PIDFILE}
         fi
     else
-        echo "irassh is not running."
+        echo "qrassh is not running."
     fi
 }
 
-irassh_start() {
-    # Start irassh
-    IRASSHARGS="$*"
+qrassh_start() {
+    # Start qrassh
+    qrasshARGS="$*"
     TWISTEDARGS="${DAEMONIZE} ${XARGS} --umask 0022 --pidfile ${PIDFILE}"
 
     # For Docker log to stdout, for non-Docker log to file
     if [ "$DOCKER" = "yes" ]; then
         TWISTEDARGS="${TWISTEDARGS} -l -"
     else
-        TWISTEDARGS="${TWISTEDARGS} -l log/irassh.log"
+        TWISTEDARGS="${TWISTEDARGS} -l log/qrassh.log"
     fi
 
     if [ ! -z "$VIRTUAL_ENV" ]; then
         echo 2>&1 "Using activated Python virtual environment \"$VIRTUAL_ENV\""
-    elif activate_venv "$IRASSH_VIRTUAL_ENV"; then
+    elif activate_venv "$qrassh_VIRTUAL_ENV"; then
         echo 2>&1 "Using custom Python virtual environment \"$VIRTUAL_ENV\""
     elif activate_venv "$DEFAULT_VIRTUAL_ENV"; then
         echo 2>&1 "Using default Python virtual environment \"$VIRTUAL_ENV\""
@@ -77,20 +77,20 @@ irassh_start() {
         echo 2>&1 "Not using Python virtual environment"
     fi
 
-    echo "Starting irassh: [twistd ${TWISTEDARGS} irassh ${IRASSHARGS}]..."
+    echo "Starting qrassh: [twistd ${TWISTEDARGS} qrassh ${qrasshARGS}]..."
     if [ "$AUTHBIND_ENABLED" = "no" ]
     then
-        twistd ${TWISTEDARGS} ${IRASSHARGS} irassh
+        twistd ${TWISTEDARGS} ${qrasshARGS} qrassh
     else
-        authbind --deep twistd ${TWISTEDARGS} ${IRASSHARGS} irassh
+        authbind --deep twistd ${TWISTEDARGS} ${qrasshARGS} qrassh
     fi
 }
 
-irassh_stop () {
-    # Stop irassh
+qrassh_stop () {
+    # Stop qrassh
     PID=$(cat ${PIDFILE} 2>/dev/null || echo "")
     if [ -n "$PID" ]; then
-      echo "Stopping irassh..."
+      echo "Stopping qrassh..."
       if kill -TERM $PID; then
           echo -n
       else
@@ -98,15 +98,15 @@ irassh_stop () {
           rm -f ${PIDFILE}
       fi
     else
-        echo "irassh is not running."
+        echo "qrassh is not running."
     fi
 }
 
-irassh_force_stop () {
-    # Force Stop irassh
+qrassh_force_stop () {
+    # Force Stop qrassh
     PID=$(cat ${PIDFILE} 2>/dev/null || echo -n "")
     if [ -n "$PID" ]; then
-        echo -n "Stopping irassh..."
+        echo -n "Stopping qrassh..."
         if kill -TERM $PID; then
             ((t = 60))
             while ((t > 1)); do
@@ -126,11 +126,11 @@ irassh_force_stop () {
             rm -f ${PIDFILE}
         fi
     else
-        echo "irassh is not running."
+        echo "qrassh is not running."
     fi
 }
 
-irassh_usage() {
+qrassh_usage() {
     echo "usage: $0 <start|stop|force-stop|restart|status>"
 }
 
@@ -140,37 +140,37 @@ irassh_usage() {
 
 if [ "$#" = 0 ]
 then
-    irassh_usage
+    qrassh_usage
     exit 1
 fi
 
-find_irassh_directory $0
-cd ${IRASSHDIR}
-export PYTHONPATH=${PYTHONPATH}:${IRASSHDIR}
-PIDFILE=var/run/irassh.pid
+find_qrassh_directory $0
+cd ${qrasshDIR}
+export PYTHONPATH=${PYTHONPATH}:${qrasshDIR}
+PIDFILE=var/run/qrassh.pid
 set -e
 
 key=$1
 shift 1
 case $key in
     stop)
-        irassh_stop $*
+        qrassh_stop $*
         ;;
     force-stop)
-        irassh_force_stop $*
+        qrassh_force_stop $*
         ;;
     start)
-        irassh_start $*
+        qrassh_start $*
         ;;
     restart)
-        irassh_stop $*
-        irassh_start $*
+        qrassh_stop $*
+        qrassh_start $*
         ;;
     status)
-        irassh_status $*
+        qrassh_status $*
         ;;
     *)
-        irassh_usage
+        qrassh_usage
         exit 1
         ;;
 esac

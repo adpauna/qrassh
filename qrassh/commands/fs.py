@@ -11,8 +11,8 @@ from __future__ import division, absolute_import
 import getopt
 import copy
 from os import path
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 commands = {}
 
@@ -40,7 +40,7 @@ class command_cat(HoneyPotCommand):
 
 
     def lineReceived(self, line):
-        log.msg(eventid='irassh.session.input',
+        log.msg(eventid='qrassh.session.input',
                 realm='cat',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')
@@ -117,7 +117,7 @@ class command_grep(HoneyPotCommand):
 
 
     def lineReceived(self, line):
-        log.msg(eventid='irassh.command.input',
+        log.msg(eventid='qrassh.command.input',
                 realm='grep',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')
@@ -186,7 +186,7 @@ class command_tail(HoneyPotCommand):
 
 
     def lineReceived(self, line):
-        log.msg(eventid='irassh.command.input',
+        log.msg(eventid='qrassh.command.input',
                 realm='tail',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')
@@ -251,7 +251,7 @@ class command_head(HoneyPotCommand):
 
 
     def lineReceived(self, line):
-        log.msg(eventid='irassh.command.input', realm='head', input=line,
+        log.msg(eventid='qrassh.command.input', realm='head', input=line,
                 format='INPUT (%(realm)s): %(input)s')
 
 

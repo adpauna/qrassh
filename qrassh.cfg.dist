@@ -1,5 +1,5 @@
 #
-# irassh configuration file (irassh.cfg)
+# qrassh configuration file (qrassh.cfg)
 #
 
 # ============================================================================
@@ -7,7 +7,7 @@
 # ============================================================================
 [honeypot]
 
-# Sensor name is used to identify this IRassh instance. Used by the database
+# Sensor name is used to identify this qrassh instance. Used by the database
 # logging modules such as mysql.
 #
 # If not specified, the logging modules will instead use the IP address of the
@@ -53,7 +53,7 @@ contents_path = honeyfs
 
 # File in the Python pickle format containing the virtual filesystem.
 #
-# This includes the filenames, paths, permissions for the IRassh filesystem,
+# This includes the filenames, paths, permissions for the qrassh filesystem,
 # but not the file contents. This is created by the bin/createfs utility from
 # a real template linux installation.
 #
@@ -99,7 +99,7 @@ ttylog_path = %(log_path)s/tty
 interactive_timeout = 180
 
 
-# EXPERIMENTAL: back-end to user for IRassh, options: proxy or shell
+# EXPERIMENTAL: back-end to user for qrassh, options: proxy or shell
 # a limited implementation is available for proxy, with request_exec functionality only
 # (default: shell)
 backend = shell
@@ -129,7 +129,7 @@ backend = shell
 
 
 # The IP address on which this machine is reachable on from the internet.
-# Useful if you use portforwarding or other mechanisms. If empty, IRassh
+# Useful if you use portforwarding or other mechanisms. If empty, qrassh
 # will determine by itself. Used in 'netstat' output
 #
 #internet_facing_ip = 9.9.9.9
@@ -148,7 +148,7 @@ backend = shell
 
 # Class that implements the checklogin() method.
 #
-# Class must be defined in irassh/core/auth.py
+# Class must be defined in qrassh/core/auth.py
 # Default is the 'UserDB' class which uses the password database.
 #
 # Alternatively the 'AuthRandom' class can be used, which will let
@@ -180,7 +180,7 @@ auth_class = UserDB
 # historical options in [honeypot] that have not yet been moved to [ssh]
 # ============================================================================
 
-# Source Port to report in logs (useful if you use iptables to forward ports to IRassh)
+# Source Port to report in logs (useful if you use iptables to forward ports to qrassh)
 #reported_ssh_port = 22
 
 
@@ -320,7 +320,7 @@ enabled = false
 listen_endpoints = tcp:2223:interface=0.0.0.0
 
 
-# Source Port to report in logs (useful if you use iptables to forward ports to IRassh)
+# Source Port to report in logs (useful if you use iptables to forward ports to qrassh)
 #reported_port = 23
 
 
@@ -337,12 +337,12 @@ listen_endpoints = tcp:2223:interface=0.0.0.0
 #user = anonymous@sensors.carnivore.it
 #password = anonymous
 #muc = dionaea.sensors.carnivore.it
-#signal_createsession = irassh-events
-#signal_connectionlost = irassh-events
-#signal_loginfailed = irassh-events
-#signal_loginsucceeded = irassh-events
-#signal_command = irassh-events
-#signal_clientversion = irassh-events
+#signal_createsession = qrassh-events
+#signal_connectionlost = qrassh-events
+#signal_loginfailed = qrassh-events
+#signal_loginsucceeded = qrassh-events
+#signal_command = qrassh-events
+#signal_clientversion = qrassh-events
 #debug=true
 
 
@@ -358,7 +358,7 @@ listen_endpoints = tcp:2223:interface=0.0.0.0
 # JSON based logging module
 #
 [output_jsonlog]
-logfile = log/irassh.json
+logfile = log/qrassh.json
 
 
 # Supports logging to Elasticsearch
@@ -367,8 +367,8 @@ logfile = log/irassh.json
 #[output_elasticsearch]
 #host = localhost
 #port = 9200
-#index = irassh
-#type = irassh
+#index = qrassh
+#type = qrassh
 
 
 # Send login attemp information to SANS DShield
@@ -415,7 +415,7 @@ format = text
 #
 [output_mysql]
 host = localhost
-database = irassh
+database = qrassh
 username = root
 password = root
 port = 3306
@@ -429,7 +429,7 @@ debug = false
 #port = 28015
 #table = output
 #password =
-#db = irassh
+#db = qrassh
 
 # SQLite3 logging module
 #
@@ -438,7 +438,7 @@ debug = false
 #     sqlite3 <db_file> < doc/sql/sqlite3.sql
 #
 #[output_sqlite]
-#db_file = irassh.db
+#db_file = qrassh.db
 
 # MongoDB logging module
 #
@@ -457,7 +457,7 @@ debug = false
 #port = 8889
 #username = admin
 #password = password
-#index = irassh
+#index = qrassh
 
 
 # Splunk HTTP Event Collector (HEC) output module
@@ -468,9 +468,9 @@ debug = false
 #[output_splunk]
 #url = https://localhost:8088/services/collector/event
 #token = 6A0EA6C6-8006-4E39-FC44-C35FF6E561A8
-#index = irassh
-#sourcetype = irassh
-#source = irassh
+#index = qrassh
+#sourcetype = qrassh
+#source = qrassh
 
 
 # HPFeeds
@@ -522,7 +522,7 @@ debug = false
 #address = 127.0.0.1:9000
 #timeout = 5
 
-# Upload files that irassh has captured to an S3 (or compatible bucket)
+# Upload files that qrassh has captured to an S3 (or compatible bucket)
 # Files are stored with a name that is the SHA of their contents
 #
 #[output_s3]
@@ -532,7 +532,7 @@ debug = false
 #secret_access_key = wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY
 #
 # The bucket to store the files in. The bucket must already exist.
-#bucket = my-irassh-bucket
+#bucket = my-qrassh-bucket
 #
 # The region the bucket is in
 #region = eu-west-1

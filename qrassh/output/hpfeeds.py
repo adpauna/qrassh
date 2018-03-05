@@ -15,7 +15,7 @@ import uuid
 
 from twisted.python import log
 
-import irassh.core.output
+import qrassh.core.output
 
 """
 From https://github.com/threatstream/kippo/blob/master/kippo/dblog/hpfeeds.py
@@ -38,7 +38,7 @@ SIZES = {
     OP_SUBSCRIBE: 5+256*2,
 }
 
-COWRIECHAN = 'irassh.sessions'
+COWRIECHAN = 'qrassh.sessions'
 
 class BadClient(Exception):
     pass
@@ -251,7 +251,7 @@ class hpclient(object):
 
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     Output plugin for HPFeeds
     """
@@ -259,7 +259,7 @@ class Output(irassh.core.output.Output):
     def __init__(self, cfg):
         self.cfg = cfg
         log.msg("Early version of hpfeeds-output, untested!")
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -284,7 +284,7 @@ class Output(irassh.core.output.Output):
         """
         """
         session = entry["session"]
-        if entry["eventid"] == 'irassh.session.connect':
+        if entry["eventid"] == 'qrassh.session.connect':
             self.meta[session] = {'session':session,
                 'startTime': entry["timestamp"], 'endTime':'',
                 'peerIP': entry["src_ip"], 'peerPort': entry["src_port"],
@@ -293,40 +293,40 @@ class Output(irassh.core.output.Output):
                 'unknownCommands':[], 'urls':[], 'version': None,
                 'ttylog': None, 'hashes': set(), 'protocol': entry['protocol']}
 
-        elif entry["eventid"] == 'irassh.login.success':
+        elif entry["eventid"] == 'qrassh.login.success':
             u, p = entry['username'], entry['password']
             self.meta[session]['loggedin'] = (u, p)
 
-        elif entry["eventid"] == 'irassh.login.failed':
+        elif entry["eventid"] == 'qrassh.login.failed':
             u, p = entry['username'], entry['password']
             self.meta[session]['credentials'].append((u, p))
 
-        elif entry["eventid"] == 'irassh.command.success':
+        elif entry["eventid"] == 'qrassh.command.success':
             c = entry['input']
             self.meta[session]['commands'].append(c)
 
-        elif entry["eventid"] == 'irassh.command.failed':
+        elif entry["eventid"] == 'qrassh.command.failed':
             uc = entry['input']
             self.meta[session]['unknownCommands'].append(uc)
 
-        elif entry["eventid"] == 'irassh.session.file_download':
+        elif entry["eventid"] == 'qrassh.session.file_download':
             url = entry['url']
             self.meta[session]['urls'].append(url)
             self.meta[session]['hashes'].add(entry['shasum'])
 
-        elif entry["eventid"] == 'irassh.session.file_upload':
+        elif entry["eventid"] == 'qrassh.session.file_upload':
             self.meta[session]['hashes'].add(entry['shasum'])
 
-        elif entry["eventid"] == 'irassh.client.version':
+        elif entry["eventid"] == 'qrassh.client.version':
             v = entry['version']
             self.meta[session]['version'] = v
 
-        elif entry["eventid"] == 'irassh.log.closed':
+        elif entry["eventid"] == 'qrassh.log.closed':
             # entry["ttylog"]
             with open( entry["ttylog"]) as ttylog:
                 self.meta[session]['ttylog'] = ttylog.read().encode('hex')
 
-        elif entry["eventid"] == 'irassh.session.closed':
+        elif entry["eventid"] == 'qrassh.session.closed':
             log.msg('publishing metadata to hpfeeds')
             meta = self.meta[session]
             self.meta[session]['endTime'] = entry["timestamp"]

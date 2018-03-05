@@ -3,7 +3,7 @@
 
 from __future__ import division, absolute_import
 
-from irassh.shell.honeypot import HoneyPotCommand,StdOutStdErrEmulationProtocol
+from qrassh.shell.honeypot import HoneyPotCommand,StdOutStdErrEmulationProtocol
 from twisted.python import log
 commands = {}
 
@@ -71,7 +71,7 @@ class command_busybox(HoneyPotCommand):
         cmdclass = self.protocol.getCommand(cmd,
                                             self.environ['PATH'].split(':'))
         if cmdclass:
-            log.msg(eventid='irassh.command.success',
+            log.msg(eventid='qrassh.command.success',
                     input=line,
                     format='Command found: %(input)s')
             command = StdOutStdErrEmulationProtocol(self.protocol,cmdclass,self.args[1:],self.input_data,None)

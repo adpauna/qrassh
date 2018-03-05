@@ -6,7 +6,7 @@ import socket
 import struct
 import sys
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 if sys.version_info > (3,):
     long = int

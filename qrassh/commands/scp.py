@@ -36,8 +36,8 @@ import time
 
 from twisted.python import log
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell import fs
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell import fs
 
 commands = {}
 
@@ -100,7 +100,7 @@ class command_scp(HoneyPotCommand):
     def lineReceived(self, line):
         """
         """
-        log.msg(eventid='irassh.session.file_download',
+        log.msg(eventid='qrassh.session.file_download',
                 realm='scp',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')
@@ -136,7 +136,7 @@ class command_scp(HoneyPotCommand):
                 log.msg("Not storing duplicate content " + shasum)
 
             log.msg(format='SCP Uploaded file \"%(filename)s\" to %(outfile)s',
-                    eventid='irassh.session.file_upload',
+                    eventid='qrassh.session.file_upload',
                     filename=os.path.basename(fname),
                     url=fname,
                     outfile=shasum,

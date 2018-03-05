@@ -4,14 +4,14 @@ import time
 from datetime import datetime
 import rethinkdb as r
 
-import irassh.core.output
+import qrassh.core.output
 
 
 def iso8601_to_timestamp(value):
     return time.mktime(datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ").timetuple())
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -25,7 +25,7 @@ class Output(irassh.core.output.Output):
         self.db = cfg.get(self.RETHINK_DB_SEGMENT, 'db')
         self.table = cfg.get(self.RETHINK_DB_SEGMENT, 'table')
         self.password = cfg.get(self.RETHINK_DB_SEGMENT, 'password')
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
     # noinspection PyAttributeOutsideInit
     def start(self):

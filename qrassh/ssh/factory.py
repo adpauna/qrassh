@@ -14,10 +14,10 @@ from twisted.conch.ssh import keys
 from twisted.python import log
 from twisted.conch.openssh_compat import primes
 
-from irassh.ssh import connection
-from irassh.ssh import userauth
-from irassh.ssh import transport
-from irassh.core import keys as cowriekeys
+from qrassh.ssh import connection
+from qrassh.ssh import userauth
+from qrassh.ssh import transport
+from qrassh.core import keys as cowriekeys
 
 
 class CowrieSSHFactory(factory.SSHFactory):

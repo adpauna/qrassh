@@ -8,14 +8,14 @@ from __future__ import division, absolute_import
 import pickle
 import copy
 
-from irassh.shell import fs
+from qrassh.shell import fs
 
 
 class FakeServer:
     """
     @ivar cfg Configuration for honeypot
     @ivar hostname Servers Host Name
-    @ivar fs File System for irassh to use
+    @ivar fs File System for qrassh to use
     """
     def __init__(self, cfg):
         self.cfg = cfg
@@ -31,7 +31,7 @@ class FakeAvatar:
     """
     @var avatar itself
     @ivar server server configuration
-    @var fs File System for irassh to use
+    @var fs File System for qrassh to use
     @var environ for user
     @var uid for user
     @var

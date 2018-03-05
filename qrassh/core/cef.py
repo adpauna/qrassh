@@ -33,22 +33,22 @@ from __future__ import division, absolute_import
 
 from twisted.python import log
 
-#  irassh.client.fingerprint
-#  irassh.client.size
-#  irassh.client.var
-#  irassh.client.version
-#  irassh.command.failed
-#  irassh.command.success
-#  irassh.direct-tcpip.data
-#  irassh.direct-tcpip.request
-#  irassh.log.closed
-#  irassh.log.open
-#  irassh.login.failed
-#  irassh.login.success
-#  irassh.session.closed
-#  irassh.session.connect
-#  irassh.session.file_download
-#  irassh.session.file_upload
+#  qrassh.client.fingerprint
+#  qrassh.client.size
+#  qrassh.client.var
+#  qrassh.client.version
+#  qrassh.command.failed
+#  qrassh.command.success
+#  qrassh.direct-tcpip.data
+#  qrassh.direct-tcpip.request
+#  qrassh.log.closed
+#  qrassh.log.open
+#  qrassh.login.failed
+#  qrassh.login.success
+#  qrassh.session.closed
+#  qrassh.session.connect
+#  qrassh.session.file_download
+#  qrassh.session.file_upload
 
 def formatCef(logentry):
     """
@@ -71,22 +71,22 @@ def formatCef(logentry):
         'proto': 'tcp'
     }
 
-    if logentry['eventid'] == 'irassh.session.connect':
+    if logentry['eventid'] == 'qrassh.session.connect':
         cefExtensions['spt'] = logentry['src_port']
         cefExtensions['dpt'] = logentry['dst_port']
         cefExtensions['src'] = logentry['src_ip']
         cefExtensions['dst'] = logentry['dst_ip']
-    elif logentry['eventid'] == 'irassh.login.success':
+    elif logentry['eventid'] == 'qrassh.login.success':
         cefExtensions['duser'] = logentry['username']
         cefExtensions['outcome'] = 'success'
-    elif logentry['eventid'] == 'irassh.login.failed':
+    elif logentry['eventid'] == 'qrassh.login.failed':
         cefExtensions['duser'] = logentry['username']
         cefExtensions['outcome'] = 'failed'
-    elif logentry['eventid'] == 'irassh.file.file_download':
+    elif logentry['eventid'] == 'qrassh.file.file_download':
         cefExtensions['filehash'] = logentry['filehash']
         cefExtensions['filePath'] = logentry['filename']
         cefExtensions['fsize'] = logentry['size']
-    elif logentry['eventid'] == 'irassh.file.file_upload':
+    elif logentry['eventid'] == 'qrassh.file.file_upload':
         cefExtensions['filehash'] = logentry['filehash']
         cefExtensions['filePath'] = logentry['filename']
         cefExtensions['fsize'] = logentry['size']

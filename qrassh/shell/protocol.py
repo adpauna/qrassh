@@ -20,8 +20,8 @@ from twisted.protocols.policies import TimeoutMixin
 from twisted.conch import recvline
 from twisted.conch.insults import insults
 
-from irassh.shell import honeypot
-from irassh.core import utils
+from qrassh.shell import honeypot
+from qrassh.core import utils
 
 class HoneyPotBaseProtocol(insults.TerminalProtocol, TimeoutMixin):
     """
@@ -49,10 +49,10 @@ class HoneyPotBaseProtocol(insults.TerminalProtocol, TimeoutMixin):
         self.input_data = None
         self.data = None
         self.commands = {}
-        import irassh.commands
-        for c in irassh.commands.__all__:
+        import qrassh.commands
+        for c in qrassh.commands.__all__:
             try:
-                module = __import__('irassh.commands.%s' % (c,),
+                module = __import__('qrassh.commands.%s' % (c,),
                     globals(), locals(), ['commands'])
                 self.commands.update(module.commands)
             except Exception as e:

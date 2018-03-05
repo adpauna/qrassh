@@ -4,10 +4,10 @@ from __future__ import division, absolute_import
 
 import pyes
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -18,7 +18,7 @@ class Output(irassh.core.output.Output):
         self.port = cfg.get('output_elasticsearch', 'port')
         self.index = cfg.get('output_elasticsearch', 'index')
         self.type = cfg.get('output_elasticsearch', 'type')
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):

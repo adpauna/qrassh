@@ -18,9 +18,9 @@ from twisted.web import client, http_headers
 from twisted.web.client import FileBodyProducer
 from twisted.internet.ssl import ClientContextFactory
 
-import irassh.core.output
+import qrassh.core.output
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -48,7 +48,7 @@ class Output(irassh.core.output.Output):
         except:
             self.host = None
 
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):

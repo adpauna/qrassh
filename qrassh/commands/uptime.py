@@ -5,8 +5,8 @@ from __future__ import division, absolute_import
 
 import time
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.core import utils
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.core import utils
 
 commands = {}
 

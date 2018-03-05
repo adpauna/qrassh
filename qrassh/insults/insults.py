@@ -14,8 +14,8 @@ import hashlib
 from twisted.python import log
 from twisted.conch.insults import insults
 
-from irassh.core import ttylog
-from irassh.shell import protocol
+from qrassh.core import ttylog
+from qrassh.shell import protocol
 
 
 class LoggingServerProtocol(insults.ServerProtocol):
@@ -74,7 +74,7 @@ class LoggingServerProtocol(insults.ServerProtocol):
             ttylog.ttylog_open(self.ttylogFile, self.startTime)
             self.ttylogOpen = True
             self.ttylogSize = 0
-            log.msg(eventid='irassh.log.open',
+            log.msg(eventid='qrassh.log.open',
                 ttylog=self.ttylogFile,
                 format='Opening TTY Log: %(ttylog)s')
 
@@ -165,7 +165,7 @@ class LoggingServerProtocol(insults.ServerProtocol):
                     else:
                         os.rename(self.stdinlogFile, shasumfile)
                     # os.symlink(shasum, self.stdinlogFile)
-                log.msg(eventid='irassh.session.file_download',
+                log.msg(eventid='qrassh.session.file_download',
                         format='Saved stdin contents with SHA-256 %(shasum)s to %(outfile)s',
                         url='stdin',
                         outfile=shasumfile,
@@ -202,7 +202,7 @@ class LoggingServerProtocol(insults.ServerProtocol):
                         else:
                             os.rename(rf, shasumfile)
                         # os.symlink(shasum, rf)
-                    log.msg(eventid='irassh.session.file_download',
+                    log.msg(eventid='qrassh.session.file_download',
                             format='Saved redir contents with SHA-256 %(shasum)s to %(outfile)s',
                             url=url,
                             outfile=shasumfile,
@@ -212,7 +212,7 @@ class LoggingServerProtocol(insults.ServerProtocol):
             self.redirFiles.clear()
 
         if self.ttylogEnabled and self.ttylogOpen:
-            log.msg(eventid='irassh.log.closed',
+            log.msg(eventid='qrassh.log.closed',
                     format='Closing TTY Log: %(ttylog)s after %(duration)d seconds',
                     ttylog=self.ttylogFile,
                     size=self.ttylogSize,

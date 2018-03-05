@@ -30,7 +30,7 @@ import tempfile
 
 from twisted.python import log
 
-from irassh.core.config import CONFIG
+from qrassh.core.config import CONFIG
 
 class Artifact:
     """

@@ -17,9 +17,9 @@ from twisted.conch.ssh import session
 from twisted.conch.telnet import ECHO, StatefulTelnetProtocol, SGA, \
                                  TelnetBootstrapProtocol
 
-from irassh.shell import pwd
-from irassh.shell import protocol as cproto
-from irassh.insults import insults
+from qrassh.shell import pwd
+from qrassh.shell import protocol as cproto
+from qrassh.insults import insults
 
 class HoneyPotTelnetSession(TelnetBootstrapProtocol):
     """

@@ -13,9 +13,9 @@ from twisted.python import failure, log
 
 from twisted.internet import error, reactor
 
-from irassh.shell.honeypot import HoneyPotCommand, HoneyPotShell, StdOutStdErrEmulationProtocol
-from irassh.core.auth import UserDB
-from irassh.core import utils
+from qrassh.shell.honeypot import HoneyPotCommand, HoneyPotShell, StdOutStdErrEmulationProtocol
+from qrassh.core.auth import UserDB
+from qrassh.core import utils
 
 commands = {}
 
@@ -368,7 +368,7 @@ class command_passwd(HoneyPotCommand):
     def lineReceived(self, line):
         """
         """
-        log.msg(eventid='irassh.command.success',
+        log.msg(eventid='qrassh.command.success',
                 realm='passwd',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')
@@ -648,7 +648,7 @@ class command_php(HoneyPotCommand):
     def lineReceived(self, line):
         """
         """
-        log.msg(eventid='irassh.command.success',
+        log.msg(eventid='qrassh.command.success',
                 realm='php',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s' )

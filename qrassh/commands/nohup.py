@@ -7,8 +7,8 @@ from __future__ import division, absolute_import
 import os
 import getopt
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 commands = {}
 

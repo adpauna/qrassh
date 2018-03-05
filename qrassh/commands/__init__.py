@@ -36,5 +36,5 @@ __all__ = [
     'uptime',
     'python',
     'tftp',
-    'irasshcommands'
+    'qrasshcommands'
 ]

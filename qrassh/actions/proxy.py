@@ -4,9 +4,9 @@ import time
 
 import pygeoip
 
-from irassh.actions import dao
-from irassh.rl import rl_state
-from irassh.rl.learning import q_learner
+from qrassh.actions import dao
+from qrassh.rl import rl_state
+from qrassh.rl.learning import q_learner
 
 # generate RL state
 sequence_length = 10
@@ -17,7 +17,7 @@ params = {
     "nn": nn_param,
     "sequence_length": 10,  # The number of commands that make of a state
     "number_of_actions": 5,
-    "cmd2number_reward": "irassh/rl/cmd2number_reward.p",
+    "cmd2number_reward": "qrassh/rl/cmd2number_reward.p",
     "GAMMA": 0.9  # Forgetting.
 }
 rl_agent = q_learner(params)
@@ -91,7 +91,7 @@ class InsultAction(Action):
     def process(self):
         location = self.getCountryCode()
         print("Insult Message! IP= %s/location=%s\n" % (self.clientIp, location))
-        self.write(dao.getIRasshDao().getInsultMsg(location.lower()) + "\n")
+        self.write(dao.getQRasshDao().getInsultMsg(location.lower()) + "\n")
 
     def getCountryCode(self):
         path, file = os.path.split(__file__)
@@ -115,7 +115,7 @@ class FakeAction(Action):
         self.setPassed(False)
 
     def process(self):
-        fake_output = dao.getIRasshDao().getFakeOutput(self.command)
+        fake_output = dao.getQRasshDao().getFakeOutput(self.command)
         if fake_output is not None:
             self.write(fake_output + "\n")
 
@@ -191,7 +191,7 @@ class ActionPersister(object):
         if "initial_cmd" in actionState.keys():
             print("Save next_cmd: " + cmd)
             actionState["next_cmd"] = cmd
-            dao.getIRasshDao().saveCase(actionState)
+            dao.getQRasshDao().saveCase(actionState)
 
         print("Save initial_cmd: " + cmd)
         actionState["initial_cmd"] = cmd

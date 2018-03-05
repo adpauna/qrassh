@@ -5,17 +5,17 @@ from __future__ import division, absolute_import
 import json
 import socket
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     def __init__(self, cfg):
         addr = cfg.get('output_socketlog', 'address')
         self.host = addr.split(':')[0]
         self.port = int(addr.split(':')[1])
 
         self.timeout = int(cfg.get('output_socketlog', 'timeout'))
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
     def start(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

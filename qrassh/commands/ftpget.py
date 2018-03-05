@@ -13,8 +13,8 @@ from ftplib import FTP
 
 from twisted.python import log
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 commands = {}
 
@@ -112,7 +112,7 @@ Download a file via FTP
         result = self.ftp_download(self.safeoutfile)
 
         if not result:
-            self.protocol.logDispatch(eventid='irassh.session.file_download.failed',
+            self.protocol.logDispatch(eventid='qrassh.session.file_download.failed',
                                       format='Attempt to download file(s) from URL (%(url)s) failed',
                                       url=self.url_log)
             self.safeoutfile = None
@@ -135,7 +135,7 @@ Download a file via FTP
             os.remove(self.safeoutfile)
             log.msg("Not storing duplicate content " + shasum)
 
-        self.protocol.logDispatch(eventid='irassh.session.file_download',
+        self.protocol.logDispatch(eventid='qrassh.session.file_download',
                                   format='Downloaded URL (%(url)s) with SHA-256 %(shasum)s to %(outfile)s',
                                   url=self.url_log,
                                   outfile=hash_path,

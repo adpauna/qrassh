@@ -6,16 +6,16 @@ import pymongo
 
 from twisted.python import log
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
     def __init__(self, cfg):
         self.cfg = cfg
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
     def insert_one(self, collection, event):
         try:
@@ -71,7 +71,7 @@ class Output(irassh.core.output.Output):
 
         eventid = entry["eventid"]
 
-        if eventid == 'irassh.session.connect':
+        if eventid == 'qrassh.session.connect':
             # Check if sensor exists, else add it.
             doc = self.col_sensors.find_one({'sensor': self.sensor})
             if doc:
@@ -87,19 +87,19 @@ class Output(irassh.core.output.Output):
             log.msg('Session Created')
             self.insert_one(self.col_sessions, entry)
 
-        elif eventid in ['irassh.login.success', 'irassh.login.failed']:
+        elif eventid in ['qrassh.login.success', 'qrassh.login.failed']:
             self.insert_one(self.col_auth, entry)
 
-        elif eventid in ['irassh.command.success', 'irassh.command.failed']:
+        elif eventid in ['qrassh.command.success', 'qrassh.command.failed']:
             self.insert_one(self.col_input, entry)
 
-        elif eventid == 'irassh.session.file_download':
+        elif eventid == 'qrassh.session.file_download':
             # ToDo add a config section and offer to store the file in the db - useful for central logging
             # we will add an option to set max size, if its 16mb or less we can store as normal,
             # If over 16 either fail or we just use gridfs both are simple enough.
             self.insert_one(self.col_downloads, entry)
 
-        elif eventid == 'irassh.client.version':
+        elif eventid == 'qrassh.client.version':
             doc = self.col_sessions.find_one({'session': entry['session']})
             if doc:
                 doc['sshversion'] = entry['version']
@@ -107,7 +107,7 @@ class Output(irassh.core.output.Output):
             else:
                 pass
 
-        elif eventid == 'irassh.client.size':
+        elif eventid == 'qrassh.client.size':
             doc = self.col_sessions.find_one({'session': entry['session']})
             if doc:
                 doc['termsize'] = '{0}x{1}'.format(entry['width'], entry['height'])
@@ -115,7 +115,7 @@ class Output(irassh.core.output.Output):
             else:
                 pass
 
-        elif eventid == 'irassh.session.closed':
+        elif eventid == 'qrassh.session.closed':
             doc = self.col_sessions.find_one({'session': entry['session']})
             if doc:
                 doc['endtime'] = entry['timestamp']
@@ -123,14 +123,14 @@ class Output(irassh.core.output.Output):
             else:
                 pass
 
-        elif eventid == 'irassh.log.closed':
+        elif eventid == 'qrassh.log.closed':
             # ToDo Compress to opimise the space and if your sending to remote db
             with open(entry["ttylog"]) as ttylog:
                 entry['ttylogpath'] = entry['ttylog']
                 entry['ttylog'] = ttylog.read().encode('hex')
             self.insert_one(self.col_ttylog, entry)
 
-        elif eventid == 'irassh.client.fingerprint':
+        elif eventid == 'qrassh.client.fingerprint':
             self.insert_one(self.col_keyfingerprints, entry)
 
         # Catch any other event types

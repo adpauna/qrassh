@@ -14,11 +14,11 @@ from twisted.conch.interfaces import IConchUser, ISession, ISFTPServer
 from twisted.conch.ssh import filetransfer as conchfiletransfer
 from twisted.python import log, components
 
-from irassh.ssh import session as sshsession
-from irassh.ssh import forwarding
-from irassh.shell import session as shellsession
-from irassh.shell import pwd
-from irassh.shell import filetransfer
+from qrassh.ssh import session as sshsession
+from qrassh.ssh import forwarding
+from qrassh.shell import session as shellsession
+from qrassh.shell import pwd
+from qrassh.shell import filetransfer
 
 
 @implementer(IConchUser)

@@ -11,7 +11,7 @@ import getopt
 
 from twisted.python import log
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 
@@ -122,7 +122,7 @@ class command_python(HoneyPotCommand):
     def lineReceived(self, line):
         """
         """
-        log.msg(eventid='irassh.command.input',
+        log.msg(eventid='qrassh.command.input',
                 realm='python',
                 input=line,
                 format='INPUT (%(realm)s): %(input)s')

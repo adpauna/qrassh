@@ -4,7 +4,7 @@ from __future__ import division, absolute_import
 
 import socket
 
-from irassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.honeypot import HoneyPotCommand
 
 commands = {}
 

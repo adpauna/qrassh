@@ -50,13 +50,13 @@ from twisted.internet import defer, reactor
 from twisted.web import client, http_headers
 from twisted.internet.ssl import ClientContextFactory
 
-import irassh.core.output
+import qrassh.core.output
 
 COWRIE_USER_AGENT = 'Cowrie Honeypot'
 VTAPI_URL = b'https://www.virustotal.com/vtapi/v2/'
-COMMENT = "First seen by Cowrie SSH honeypot http://github.com/micheloosterhof/irassh"
+COMMENT = "First seen by Cowrie SSH honeypot http://github.com/micheloosterhof/qrassh"
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -66,7 +66,7 @@ class Output(irassh.core.output.Output):
         self.upload = cfg.getboolean('output_virustotal', 'upload', fallback=True)
         self.comment = cfg.getboolean('output_virustotal', 'comment', fallback=True)
         self.commenttext = cfg.get('output_virustotal', 'commenttext', fallback=COMMENT)
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -86,7 +86,7 @@ class Output(irassh.core.output.Output):
     def write(self, entry):
         """
         """
-        if entry["eventid"] == 'irassh.session.file_download':
+        if entry["eventid"] == 'qrassh.session.file_download':
             #TODO: RENABLE
             #log.msg("Sending url to VT")
             #self.scanurl(entry["url"])
@@ -94,7 +94,7 @@ class Output(irassh.core.output.Output):
             log.msg("Checking scan report at VT")
             self.scanfile(entry)
 
-        elif entry["eventid"] == 'irassh.session.file_upload':
+        elif entry["eventid"] == 'qrassh.session.file_upload':
             log.msg("Checking scan report at VT")
             self.scanfile(entry["shasum"])
 

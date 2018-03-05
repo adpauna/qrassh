@@ -16,10 +16,10 @@ import re
 from twisted.python import log
 from twisted.internet import threads, reactor
 
-import irassh.core.output
+import qrassh.core.output
 
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
     def __init__(self, cfg):
@@ -31,7 +31,7 @@ class Output(irassh.core.output.Output):
         except:
             self.debug = False
 
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -43,7 +43,7 @@ class Output(irassh.core.output.Output):
 
 
     def write(self, entry):
-        if entry["eventid"] == 'irassh.login.success' or entry["eventid"] == 'irassh.login.failed':
+        if entry["eventid"] == 'qrassh.login.success' or entry["eventid"] == 'qrassh.login.failed':
             date = dateutil.parser.parse(entry["timestamp"])
             self.batch.append({
                 'date' : date.date().__str__(),

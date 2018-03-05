@@ -35,20 +35,20 @@ from __future__ import division, absolute_import
 import json
 import os
 
-import irassh.core.output
-import irassh.python.logfile
+import qrassh.core.output
+import qrassh.python.logfile
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     Docstring class
     """
 
     def __init__(self, cfg):
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
         fn = cfg.get('output_jsonlog', 'logfile')
         dirs = os.path.dirname(fn)
         base = os.path.basename(fn)
-        self.outfile = irassh.python.logfile.CowrieDailyLogFile(base, dirs, defaultMode=0o664)
+        self.outfile = qrassh.python.logfile.CowrieDailyLogFile(base, dirs, defaultMode=0o664)
 
 
     def start(self):

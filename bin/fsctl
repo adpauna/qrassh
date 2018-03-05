@@ -2,16 +2,16 @@
 
 ################################################################
 # This is a command line interpreter used to edit
-# irassh file system pickle files.
+# qrassh file system pickle files.
 #
 # It is intended to mimic a basic bash shell and supports
 # relative file references.
 #
 # Do not use to build a complete file system. Use:
-# /opt/irassh/bin/createfs
+# /opt/qrassh/bin/createfs
 #
 # Instead it should be used to edit existing file systems
-# such as the default: /opt/irassh/data/fs.pickle.
+# such as the default: /opt/qrassh/data/fs.pickle.
 #
 # Donovan Hubbard
 # Douglas Hubbard
@@ -635,18 +635,18 @@ class fseditCmd(cmd.Cmd):
     def help_about(self):
         print("Kippo/Cowrie stores information about its file systems in a " + \
             "series of nested lists. Once the lists are made, they are " + \
-            "stored in a pickle file on the hard drive. Every time irassh " + \
+            "stored in a pickle file on the hard drive. Every time qrassh " + \
             "gets a new client, it reads from the pickle file and loads " + \
             "the fake file system into memory. By default this file " + \
-            "is /opt/irassh/data/fs.pickle. Originally the script " + \
-            "/opt/irassh/bin/createfs was used to copy the file system " + \
+            "is /opt/qrassh/data/fs.pickle. Originally the script " + \
+            "/opt/qrassh/bin/createfs was used to copy the file system " + \
             "of the existing computer. However, it quite difficult to " + \
             "edit the pickle file by hand.\n\nThis script strives to be " + \
             "a bash-like interface that allows users to modify " + \
             "existing fs pickle files. It supports many of the " + \
             "common bash commands and even handles relative file " + \
             "paths. Keep in mind that you need to restart the " + \
-            "irassh process in order for the new file system to be " + \
+            "qrassh process in order for the new file system to be " + \
             "reloaded into memory.\n\nDonovan Hubbard, Douglas Hubbard, " + \
             "March 2013\nVersion 1.0")
 

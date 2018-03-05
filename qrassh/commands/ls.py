@@ -7,9 +7,9 @@ import stat
 import getopt
 import time
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
-from irassh.shell.pwd import Passwd, Group
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
+from qrassh.shell.pwd import Passwd, Group
 
 commands = {}
 

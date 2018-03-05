@@ -4,8 +4,8 @@
 # Commands mapped to common malware
 
 import os
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.actions import dao
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.actions import dao
 
 commands = {}
 
@@ -22,7 +22,7 @@ class ProxyCommand(HoneyPotCommand):
 
 class FakeCommand(HoneyPotCommand):
     def call(self):
-        fakeOuput = dao.getIRasshDao().getFakeOutput(self.protocol.cwd)
+        fakeOuput = dao.getQRasshDao().getFakeOutput(self.protocol.cwd)
         if fakeOuput is not None:
             self.write(fakeOuput + "\n")
 
@@ -31,7 +31,7 @@ commands['lsp'] = ProxyCommand
 commands["cpp"] = ProxyCommand
 commands["catp"] = ProxyCommand
 
-supportedCommands = dao.getIRasshDao().getCommands()
+supportedCommands = dao.getQRasshDao().getCommands()
 for command in supportedCommands:
     if command["impl_type"] == 1:
         commands[command["command"]] = ProxyCommand

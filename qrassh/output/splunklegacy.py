@@ -17,9 +17,9 @@ import json
 
 import splunklib.client as client
 
-import irassh.core.output
+import qrassh.core.output
 
-class Output(irassh.core.output.Output):
+class Output(qrassh.core.output.Output):
     """
     """
 
@@ -32,7 +32,7 @@ class Output(irassh.core.output.Output):
         self.password = cfg.get('output_splunklegacy', 'password')
         self.host = cfg.get('output_splunklegacy', 'host')
         self.port = cfg.get('output_splunklegacy', 'port')
-        irassh.core.output.Output.__init__(self, cfg)
+        qrassh.core.output.Output.__init__(self, cfg)
 
 
     def start(self):
@@ -43,7 +43,7 @@ class Output(irassh.core.output.Output):
             port=self.port,
             username=self.username,
             password=self.password)
-        self.index = self.service.indexes['irassh']
+        self.index = self.service.indexes['qrassh']
 
 
     def stop(self):
@@ -61,9 +61,9 @@ class Output(irassh.core.output.Output):
                 del logentry[i]
 
         self.mysocket = self.index.attach(
-            sourcetype='irassh',
+            sourcetype='qrassh',
             host=self.sensor,
-            source='irassh-splunk-connector')
+            source='qrassh-splunk-connector')
         self.mysocket.send(json.dumps(logentry))
         self.mysocket.close()
 

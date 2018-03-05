@@ -49,14 +49,14 @@ from twisted.cred import portal
 from twisted.internet import reactor
 from twisted.logger import ILogObserver, globalLogPublisher
 
-from irassh.core.config import readConfigFile
-from irassh.core.utils import get_endpoints_from_section, create_endpoint_services
-from irassh import core
-import irassh.core.realm
-import irassh.core.checkers
+from qrassh.core.config import readConfigFile
+from qrassh.core.utils import get_endpoints_from_section, create_endpoint_services
+from qrassh import core
+import qrassh.core.realm
+import qrassh.core.checkers
 
-import irassh.telnet.transport
-import irassh.ssh.factory
+import qrassh.telnet.transport
+import qrassh.ssh.factory
 
 class Options(usage.Options):
     """
@@ -64,7 +64,7 @@ class Options(usage.Options):
     """
     # The '-c' parameters is currently ignored
     optParameters = [
-        ["config", "c", 'irassh.cfg', "The configuration file to use."]
+        ["config", "c", 'qrassh.cfg', "The configuration file to use."]
         ]
 
     optFlags = [
@@ -89,7 +89,7 @@ class CowrieServiceMaker(object):
     """
     FIXME: Docstring
     """
-    tapname = "irassh"
+    tapname = "qrassh"
     description = "She sells sea shells by the sea shore."
     options = Options
     dbloggers = None
@@ -98,10 +98,10 @@ class CowrieServiceMaker(object):
 
     def printHelp(self):
         """
-        Print irassh help
+        Print qrassh help
         """
 
-        print( """Usage: twistd [options] irassh [-h]
+        print( """Usage: twistd [options] qrassh [-h]
 Options:
   -h, --help             print this help message.
 
@@ -119,13 +119,13 @@ Makes a Cowrie SSH/Telnet honeypot.
             sys.exit(1)
 
         if os.name == 'posix' and os.getuid() == 0:
-            print('ERROR: You must not run irassh as root!')
+            print('ERROR: You must not run qrassh as root!')
             sys.exit(1)
 
         log.msg("Python Version {}".format(str(sys.version).replace('\n','')))
         log.msg("Twisted Version {}.{}.{}".format(__version__.major, __version__.minor, __version__.micro))
 
-        cfg = readConfigFile(("irassh.cfg.dist", "etc/irassh.cfg", "irassh.cfg"))
+        cfg = readConfigFile(("qrassh.cfg.dist", "etc/qrassh.cfg", "qrassh.cfg"))
 
         # ssh is enabled by default
         if cfg.has_option('ssh', 'enabled') == False or \
@@ -153,7 +153,7 @@ Makes a Cowrie SSH/Telnet honeypot.
                 continue
             engine = x.split('_')[1]
             try:
-                dblogger = __import__( 'irassh.dblog.{}'.format(engine),
+                dblogger = __import__( 'qrassh.dblog.{}'.format(engine),
                     globals(), locals(), ['dblog']).DBLogger(cfg)
                 log.addObserver(dblogger.emit)
                 self.dbloggers.append(dblogger)
@@ -169,7 +169,7 @@ Makes a Cowrie SSH/Telnet honeypot.
                 continue
             engine = x.split('_')[1]
             try:
-                output = __import__( 'irassh.output.{}'.format(engine),
+                output = __import__( 'qrassh.output.{}'.format(engine),
                     globals(), locals(), ['output']).Output(cfg)
                 log.addObserver(output.emit)
                 self.output_plugins.append(output)
@@ -182,11 +182,11 @@ Makes a Cowrie SSH/Telnet honeypot.
                 log.msg("Failed to load output engine: {}".format(engine))
 
         topService = service.MultiService()
-        application = service.Application('irassh')
+        application = service.Application('qrassh')
         topService.setServiceParent(application)
 
         if enableSSH:
-            factory = irassh.ssh.factory.CowrieSSHFactory(cfg)
+            factory = qrassh.ssh.factory.CowrieSSHFactory(cfg)
             factory.tac = self
             factory.portal = portal.Portal(core.realm.HoneyPotRealm(cfg))
             factory.portal.registerChecker(
@@ -207,7 +207,7 @@ Makes a Cowrie SSH/Telnet honeypot.
             create_endpoint_services(reactor, topService, listen_endpoints, factory)
 
         if enableTelnet:
-            f = irassh.telnet.transport.HoneyPotTelnetFactory(cfg)
+            f = qrassh.telnet.transport.HoneyPotTelnetFactory(cfg)
             f.tac = self
             f.portal = portal.Portal(core.realm.HoneyPotRealm(cfg))
             f.portal.registerChecker(core.checkers.HoneypotPasswordChecker(cfg))

@@ -42,11 +42,11 @@ from twisted.conch import interfaces as conchinterfaces
 from twisted.conch.telnet import ITelnetProtocol
 from twisted.python import log
 
-from irassh.shell import server as shellserver
-from irassh.shell import avatar as shellavatar
-from irassh.proxy import avatar as proxyavatar
-from irassh.proxy import server as proxyserver
-from irassh.telnet import session
+from qrassh.shell import server as shellserver
+from qrassh.shell import avatar as shellavatar
+from qrassh.proxy import avatar as proxyavatar
+from qrassh.proxy import server as proxyserver
+from qrassh.telnet import session
 
 
 @implementer(twisted.cred.portal.IRealm)

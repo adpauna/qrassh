@@ -36,8 +36,8 @@ import copy
 
 import twisted.python.log as log
 
-from irassh.shell import fs
-from irassh.shell import honeypot
+from qrassh.shell import fs
+from qrassh.shell import honeypot
 
 class CowrieServer(object):
     """

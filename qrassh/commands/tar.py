@@ -9,8 +9,8 @@ import os
 
 from twisted.python import log
 
-from irassh.shell.honeypot import HoneyPotCommand
-from irassh.shell.fs import *
+from qrassh.shell.honeypot import HoneyPotCommand
+from qrassh.shell.fs import *
 
 commands = {}
 

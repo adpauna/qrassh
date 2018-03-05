@@ -33,7 +33,7 @@ class HoneyPotSSHSession(session.SSHSession):
         value, rest = getNS(rest)
         if rest:
             raise ValueError("Bad data given in env request")
-        log.msg(eventid='irassh.client.var', format='request_env: %(name)s=%(value)s',
+        log.msg(eventid='qrassh.client.var', format='request_env: %(name)s=%(value)s',
             name=name, value=value)
         # FIXME: This only works for shell, not for exec command
         if self.session:
